@@ -1,0 +1,41 @@
+[
+    {
+        "name": "Accuracy International AX50",
+        "description": "The Accuracy International AX50 is a high-precision, bolt-action.50 BMG anti-materiel rifle designed for military and police, It features a 27-inch barrel, folding stock, and modular KeySlot rail system. The rifle is known for consistent cold-shot performance, a 6-lug 60-degree bolt, and a 5-round magazine.",
+        "category": "Anti-Materiel Rifle",
+        "image":"/weapone2.jpg"
+    },
+    {
+        "name": "Barrett M82",
+        "description": "The Barrett M82, also known as the M107 in U.S. military service, is a recoil-operated, semi-automatic anti-materiel rifle chambered in .50 BMG. It features a long barrel, large muzzle brake, and a distinctive box magazine. The M82 is designed for long-range engagements against vehicles, equipment, and personnel.",
+        "category": "Anti-Materiel Rifle",
+        "image":"/weap4.jpg"
+    },
+    {
+        "name": "M4A1 Carbine",
+        "description": "The M4A1 Carbine is a gas-operated, air-cooled, magazine-fed, shoulder-fired weapon that fires from the open-bolt position. It is a shorter and lighter variant of the M16 rifle, featuring a 14.5-inch barrel, collapsible stock, and Picatinny rail system. The M4A1 is widely used by military and law enforcement for its versatility and accuracy.",
+        "category": "Assault Rifle",
+        "image":"/weap7.jpg"
+
+    },
+
+    {
+        "name": "AK-47",
+        "description": "The AK-47 is a gas-operated assault rifle designed by Mikhail Kalashnikov. It features a 7.62x39mm cartridge, 30-round magazine, and a rotating bolt mechanism. The AK-47 is known for its simplicity, reliability, and ease of maintenance, making it one of the most widely produced and used rifles in the world.",
+        "category": "Assault Rifle",
+        "image":"/weap5.jpg"
+    },
+    {
+        "name": "Glock 17",
+        "description": "The Glock 17 is a polymer-framed, striker-fired semi-automatic pistol chambered in 9mm. It features a 17-round magazine capacity, a safe action trigger system, and a durable design. The Glock 17 is widely used by law enforcement and civilians for self-defense due to its reliability and ease of use.",
+        "category": "Pistol",
+        "image":"/weap3.jpg"
+    },
+    {
+        "name": "Smith & Wesson Model 686",
+        "description": "The Smith & Wesson Model 686 is a double-action revolver chambered in .357 Magnum. It features a stainless steel frame, adjustable rear sights, and a 6-round cylinder. The Model 686 is popular among law enforcement and civilian shooters for its accuracy, durability, and versatility.",
+        "category": "Revolver",
+        "image":"/weap6.jpg"
+    }
+
+]

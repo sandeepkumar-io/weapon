@@ -1,0 +1,84 @@
+export interface Weapon {
+  id: string;
+  name: string;
+  category: string;
+  origin: string;
+  caliber?: string;
+  range?: string;
+  weight: string;
+  speed?: string;
+  description: string;
+  specs: { label: string; value: string }[];
+}
+
+export interface Category {
+  id: string;
+  name: string;
+  subtitle: string;
+  icon: string;
+  count: number;
+  description: string;
+}
+
+export const categories: Category[] = [
+  { id: "pistols", name: "Pistols", subtitle: "Sidearms", icon: "🔫", count: 6, description: "Compact and reliable sidearms for close-quarter engagements" },
+  { id: "rifles", name: "Rifles", subtitle: "Assault", icon: "🎯", count: 6, description: "Versatile assault rifles for medium to long range combat" },
+  { id: "shotguns", name: "Shotguns", subtitle: "Close Range", icon: "💥", count: 5, description: "Devastating close-range firepower for breach operations" },
+  { id: "snipers", name: "Sniper Rifles", subtitle: "Precision", icon: "🎯", count: 5, description: "Long-range precision instruments for surgical strikes" },
+  { id: "machine-guns", name: "Machine Guns", subtitle: "Heavy", icon: "⚡", count: 5, description: "High-volume suppressive fire platforms" },
+  { id: "missiles", name: "Missiles", subtitle: "Ordnance", icon: "🚀", count: 5, description: "Guided and unguided missile systems for strategic strikes" },
+  { id: "fighter-jets", name: "Fighter Jets", subtitle: "Aviation", icon: "✈️", count: 5, description: "Advanced aerial superiority combat aircraft" },
+];
+
+export const weapons: Weapon[] = [
+  // Pistols
+  { id: "glock-19", name: "Glock 19", category: "pistols", origin: "Austria", caliber: "9mm", range: "50m", weight: "0.63 kg", description: "The Glock 19 is one of the most popular and reliable semi-automatic pistols in the world, used by military and law enforcement globally.", specs: [{ label: "Caliber", value: "9×19mm" }, { label: "Capacity", value: "15 rounds" }, { label: "Action", value: "Short recoil" }, { label: "Length", value: "185mm" }] },
+  { id: "beretta-m9", name: "Beretta M9", category: "pistols", origin: "Italy", caliber: "9mm", range: "50m", weight: "0.95 kg", description: "The standard-issue sidearm of the US military for over three decades, known for its accuracy and durability.", specs: [{ label: "Caliber", value: "9×19mm" }, { label: "Capacity", value: "15 rounds" }, { label: "Action", value: "DA/SA" }, { label: "Length", value: "217mm" }] },
+  { id: "sig-p320", name: "SIG P320", category: "pistols", origin: "USA", caliber: "9mm", range: "50m", weight: "0.83 kg", description: "Modular striker-fired pistol adopted as the M17/M18 by the US military.", specs: [{ label: "Caliber", value: "9×19mm" }, { label: "Capacity", value: "17 rounds" }, { label: "Action", value: "Striker-fired" }, { label: "Length", value: "203mm" }] },
+  { id: "desert-eagle", name: "Desert Eagle", category: "pistols", origin: "Israel/USA", caliber: ".50 AE", range: "200m", weight: "1.99 kg", description: "Iconic gas-operated semi-automatic pistol known for its massive caliber and distinctive appearance.", specs: [{ label: "Caliber", value: ".50 AE" }, { label: "Capacity", value: "7 rounds" }, { label: "Action", value: "Gas-operated" }, { label: "Length", value: "269mm" }] },
+  { id: "cz-75", name: "CZ 75", category: "pistols", origin: "Czech Republic", caliber: "9mm", range: "50m", weight: "1.0 kg", description: "One of the original wonder-nines, famous for its ergonomics and accuracy.", specs: [{ label: "Caliber", value: "9×19mm" }, { label: "Capacity", value: "16 rounds" }, { label: "Action", value: "DA/SA" }, { label: "Length", value: "206mm" }] },
+  { id: "fn-five-seven", name: "FN Five-seveN", category: "pistols", origin: "Belgium", caliber: "5.7×28mm", range: "50m", weight: "0.62 kg", description: "Unique pistol firing armor-piercing 5.7mm rounds with minimal recoil.", specs: [{ label: "Caliber", value: "5.7×28mm" }, { label: "Capacity", value: "20 rounds" }, { label: "Action", value: "DA" }, { label: "Length", value: "208mm" }] },
+
+  // Rifles
+  { id: "m4a1", name: "M4A1 Carbine", category: "rifles", origin: "USA", caliber: "5.56mm", range: "500m", weight: "3.4 kg", description: "The backbone of the US military, a versatile and modular assault carbine.", specs: [{ label: "Caliber", value: "5.56×45mm" }, { label: "Rate of Fire", value: "700-950 RPM" }, { label: "Action", value: "Gas-operated" }, { label: "Length", value: "838mm" }] },
+  { id: "ak-47", name: "AK-47", category: "rifles", origin: "Russia", caliber: "7.62mm", range: "350m", weight: "3.47 kg", description: "The most produced firearm in history, known for extreme reliability in any condition.", specs: [{ label: "Caliber", value: "7.62×39mm" }, { label: "Rate of Fire", value: "600 RPM" }, { label: "Action", value: "Gas-operated" }, { label: "Length", value: "880mm" }] },
+  { id: "hk416", name: "HK416", category: "rifles", origin: "Germany", caliber: "5.56mm", range: "600m", weight: "3.56 kg", description: "Elite assault rifle used by special forces worldwide, including the weapon used in the Bin Laden raid.", specs: [{ label: "Caliber", value: "5.56×45mm" }, { label: "Rate of Fire", value: "700-900 RPM" }, { label: "Action", value: "Short-stroke piston" }, { label: "Length", value: "709-1030mm" }] },
+  { id: "scar-h", name: "FN SCAR-H", category: "rifles", origin: "Belgium", caliber: "7.62mm", range: "800m", weight: "3.86 kg", description: "Battle rifle offering superior range and stopping power for special operations.", specs: [{ label: "Caliber", value: "7.62×51mm" }, { label: "Rate of Fire", value: "600 RPM" }, { label: "Action", value: "Gas-operated" }, { label: "Length", value: "1010mm" }] },
+  { id: "tavor-tar21", name: "IWI Tavor TAR-21", category: "rifles", origin: "Israel", caliber: "5.56mm", range: "550m", weight: "3.27 kg", description: "Compact bullpup assault rifle, the standard issue of the Israeli Defense Forces.", specs: [{ label: "Caliber", value: "5.56×45mm" }, { label: "Rate of Fire", value: "750-900 RPM" }, { label: "Action", value: "Gas-operated" }, { label: "Length", value: "720mm" }] },
+  { id: "aug", name: "Steyr AUG", category: "rifles", origin: "Austria", caliber: "5.56mm", range: "300m", weight: "3.6 kg", description: "Pioneering bullpup design with integrated optic, used by over 40 countries.", specs: [{ label: "Caliber", value: "5.56×45mm" }, { label: "Rate of Fire", value: "680-750 RPM" }, { label: "Action", value: "Gas-operated" }, { label: "Length", value: "790mm" }] },
+
+  // Shotguns
+  { id: "remington-870", name: "Remington 870", category: "shotguns", origin: "USA", caliber: "12 gauge", range: "40m", weight: "3.6 kg", description: "The best-selling pump-action shotgun in history with over 11 million produced.", specs: [{ label: "Gauge", value: "12" }, { label: "Capacity", value: "4+1" }, { label: "Action", value: "Pump-action" }, { label: "Length", value: "1060mm" }] },
+  { id: "benelli-m4", name: "Benelli M4", category: "shotguns", origin: "Italy", caliber: "12 gauge", range: "50m", weight: "3.82 kg", description: "Semi-automatic combat shotgun adopted by the US Marine Corps as the M1014.", specs: [{ label: "Gauge", value: "12" }, { label: "Capacity", value: "7+1" }, { label: "Action", value: "Semi-auto" }, { label: "Length", value: "1010mm" }] },
+  { id: "spas-12", name: "Franchi SPAS-12", category: "shotguns", origin: "Italy", caliber: "12 gauge", range: "40m", weight: "4.4 kg", description: "Iconic dual-mode combat shotgun capable of semi-auto and pump-action operation.", specs: [{ label: "Gauge", value: "12" }, { label: "Capacity", value: "8+1" }, { label: "Action", value: "Dual-mode" }, { label: "Length", value: "1041mm" }] },
+  { id: "aa-12", name: "AA-12", category: "shotguns", origin: "USA", caliber: "12 gauge", range: "40m", weight: "5.2 kg", description: "Fully automatic shotgun with recoil-reducing system for devastating firepower.", specs: [{ label: "Gauge", value: "12" }, { label: "Rate of Fire", value: "300 RPM" }, { label: "Action", value: "Full-auto" }, { label: "Feed", value: "Drum/Box" }] },
+  { id: "kel-tec-ksg", name: "Kel-Tec KSG", category: "shotguns", origin: "USA", caliber: "12 gauge", range: "40m", weight: "3.1 kg", description: "Compact bullpup shotgun with dual tube magazines for 14+1 capacity.", specs: [{ label: "Gauge", value: "12" }, { label: "Capacity", value: "14+1" }, { label: "Action", value: "Pump-action" }, { label: "Length", value: "660mm" }] },
+
+  // Snipers
+  { id: "barrett-m82", name: "Barrett M82", category: "snipers", origin: "USA", caliber: ".50 BMG", range: "1800m", weight: "14.0 kg", description: "The iconic anti-materiel rifle capable of disabling vehicles and equipment at extreme range.", specs: [{ label: "Caliber", value: ".50 BMG" }, { label: "Muzzle Velocity", value: "890 m/s" }, { label: "Action", value: "Short recoil" }, { label: "Length", value: "1448mm" }] },
+  { id: "awm", name: "Accuracy Int. AWM", category: "snipers", origin: "UK", caliber: ".338 Lapua", range: "1500m", weight: "6.9 kg", description: "Holds the record for longest confirmed kill, used by elite snipers worldwide.", specs: [{ label: "Caliber", value: ".338 Lapua" }, { label: "Muzzle Velocity", value: "936 m/s" }, { label: "Action", value: "Bolt-action" }, { label: "Length", value: "1230mm" }] },
+  { id: "m24", name: "M24 SWS", category: "snipers", origin: "USA", caliber: "7.62mm", range: "800m", weight: "5.4 kg", description: "The US Army's standard sniper weapon system based on the Remington 700.", specs: [{ label: "Caliber", value: "7.62×51mm" }, { label: "Muzzle Velocity", value: "790 m/s" }, { label: "Action", value: "Bolt-action" }, { label: "Length", value: "1092mm" }] },
+  { id: "dragunov", name: "SVD Dragunov", category: "snipers", origin: "Russia", caliber: "7.62mm", range: "800m", weight: "4.3 kg", description: "Soviet-era designated marksman rifle that remains in service across dozens of countries.", specs: [{ label: "Caliber", value: "7.62×54mmR" }, { label: "Muzzle Velocity", value: "830 m/s" }, { label: "Action", value: "Semi-auto" }, { label: "Length", value: "1225mm" }] },
+  { id: "cheytac-m200", name: "CheyTac M200", category: "snipers", origin: "USA", caliber: ".408 CT", range: "2300m", weight: "12.3 kg", description: "Ultra long-range intervention rifle with proprietary ballistic computer system.", specs: [{ label: "Caliber", value: ".408 CheyTac" }, { label: "Muzzle Velocity", value: "910 m/s" }, { label: "Action", value: "Bolt-action" }, { label: "Range", value: "2300m+" }] },
+
+  // Machine Guns
+  { id: "m249", name: "M249 SAW", category: "machine-guns", origin: "Belgium/USA", caliber: "5.56mm", range: "800m", weight: "7.5 kg", description: "Squad automatic weapon providing sustained suppressive fire for infantry units.", specs: [{ label: "Caliber", value: "5.56×45mm" }, { label: "Rate of Fire", value: "750-1000 RPM" }, { label: "Action", value: "Gas-operated" }, { label: "Feed", value: "Belt/Magazine" }] },
+  { id: "m240", name: "M240B", category: "machine-guns", origin: "Belgium", caliber: "7.62mm", range: "1800m", weight: "12.5 kg", description: "General-purpose machine gun serving as the backbone of NATO infantry firepower.", specs: [{ label: "Caliber", value: "7.62×51mm" }, { label: "Rate of Fire", value: "650-950 RPM" }, { label: "Action", value: "Gas-operated" }, { label: "Length", value: "1245mm" }] },
+  { id: "pkm", name: "PKM", category: "machine-guns", origin: "Russia", caliber: "7.62mm", range: "1500m", weight: "7.5 kg", description: "Remarkably light general-purpose machine gun used by over 50 countries.", specs: [{ label: "Caliber", value: "7.62×54mmR" }, { label: "Rate of Fire", value: "650-750 RPM" }, { label: "Action", value: "Gas-operated" }, { label: "Length", value: "1173mm" }] },
+  { id: "m134", name: "M134 Minigun", category: "machine-guns", origin: "USA", caliber: "7.62mm", range: "1000m", weight: "19 kg", description: "Rotating multi-barrel machine gun capable of firing up to 6,000 rounds per minute.", specs: [{ label: "Caliber", value: "7.62×51mm" }, { label: "Rate of Fire", value: "2000-6000 RPM" }, { label: "Action", value: "Electrically driven" }, { label: "Barrels", value: "6" }] },
+  { id: "mg42", name: "MG 42", category: "machine-guns", origin: "Germany", caliber: "7.92mm", range: "1000m", weight: "11.6 kg", description: "WWII-era machine gun with legendary rate of fire, nicknamed 'Hitler's Buzzsaw'.", specs: [{ label: "Caliber", value: "7.92×57mm" }, { label: "Rate of Fire", value: "1200-1500 RPM" }, { label: "Action", value: "Recoil-operated" }, { label: "Length", value: "1220mm" }] },
+
+  // Missiles
+  { id: "javelin", name: "FGM-148 Javelin", category: "missiles", origin: "USA", range: "4750m", weight: "22.3 kg", description: "Fire-and-forget anti-tank missile with top-attack capability, devastating against armored targets.", specs: [{ label: "Type", value: "Anti-tank" }, { label: "Guidance", value: "Infrared" }, { label: "Warhead", value: "Tandem HEAT" }, { label: "Range", value: "4750m" }] },
+  { id: "stinger", name: "FIM-92 Stinger", category: "missiles", origin: "USA", range: "4800m", weight: "10.1 kg", description: "Man-portable air-defense missile that changed the dynamics of modern warfare.", specs: [{ label: "Type", value: "MANPADS" }, { label: "Guidance", value: "IR homing" }, { label: "Speed", value: "Mach 2.2" }, { label: "Altitude", value: "3800m" }] },
+  { id: "tomahawk", name: "BGM-109 Tomahawk", category: "missiles", origin: "USA", range: "2500 km", weight: "1300 kg", description: "Long-range cruise missile capable of precision strikes from ships and submarines.", specs: [{ label: "Type", value: "Cruise missile" }, { label: "Speed", value: "Mach 0.75" }, { label: "Warhead", value: "450 kg" }, { label: "Guidance", value: "GPS/TERCOM" }] },
+  { id: "brahmos", name: "BrahMos", category: "missiles", origin: "India/Russia", range: "290 km", weight: "3000 kg", speed: "Mach 2.8", description: "One of the fastest cruise missiles in the world, capable of supersonic speeds.", specs: [{ label: "Type", value: "Cruise missile" }, { label: "Speed", value: "Mach 2.8" }, { label: "Warhead", value: "200-300 kg" }, { label: "Launch", value: "Multi-platform" }] },
+  { id: "patriot", name: "MIM-104 Patriot", category: "missiles", origin: "USA", range: "160 km", weight: "900 kg", description: "Advanced surface-to-air missile system providing theater ballistic missile defense.", specs: [{ label: "Type", value: "SAM/ABM" }, { label: "Speed", value: "Mach 5" }, { label: "Guidance", value: "Track-via-missile" }, { label: "Altitude", value: "24 km" }] },
+
+  // Fighter Jets
+  { id: "f22", name: "F-22 Raptor", category: "fighter-jets", origin: "USA", speed: "Mach 2.25", range: "2960 km", weight: "19,700 kg", description: "The world's premier air superiority stealth fighter with unmatched maneuverability.", specs: [{ label: "Role", value: "Air superiority" }, { label: "Max Speed", value: "Mach 2.25" }, { label: "Ceiling", value: "20,000m" }, { label: "Stealth", value: "5th Gen" }] },
+  { id: "f35", name: "F-35 Lightning II", category: "fighter-jets", origin: "USA", speed: "Mach 1.6", range: "2220 km", weight: "13,290 kg", description: "Multi-role stealth fighter designed for ground attack, air superiority, and reconnaissance.", specs: [{ label: "Role", value: "Multi-role" }, { label: "Max Speed", value: "Mach 1.6" }, { label: "Ceiling", value: "15,240m" }, { label: "Stealth", value: "5th Gen" }] },
+  { id: "su57", name: "Su-57 Felon", category: "fighter-jets", origin: "Russia", speed: "Mach 2.0", range: "3500 km", weight: "18,000 kg", description: "Russia's 5th generation stealth multirole fighter with supermaneuverability.", specs: [{ label: "Role", value: "Multi-role" }, { label: "Max Speed", value: "Mach 2.0" }, { label: "Ceiling", value: "20,000m" }, { label: "Stealth", value: "5th Gen" }] },
+  { id: "rafale", name: "Dassault Rafale", category: "fighter-jets", origin: "France", speed: "Mach 1.8", range: "3700 km", weight: "10,300 kg", description: "French omnirole fighter excelling in air-to-air, air-to-ground, and nuclear deterrence.", specs: [{ label: "Role", value: "Omnirole" }, { label: "Max Speed", value: "Mach 1.8" }, { label: "Ceiling", value: "15,240m" }, { label: "Gen", value: "4.5" }] },
+  { id: "eurofighter", name: "Eurofighter Typhoon", category: "fighter-jets", origin: "Europe", speed: "Mach 2.0", range: "2900 km", weight: "11,000 kg", description: "European multi-role canard-delta wing fighter designed for air superiority.", specs: [{ label: "Role", value: "Multi-role" }, { label: "Max Speed", value: "Mach 2.0" }, { label: "Ceiling", value: "19,812m" }, { label: "Gen", value: "4.5" }] },
+];
