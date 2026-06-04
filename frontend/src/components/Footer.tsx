@@ -25,7 +25,7 @@ function Footer({}: Props) {
               <Link
                 key={cat.id}
                 href={`/category/${cat.id}`}
-                className="text-sm text-muted-foreground font-body hover:text-primary transition-colors"
+                className="text-sm text-muted-foreground font-body hover:text-primary"
               >
                 {cat.name}
               </Link>
@@ -41,7 +41,7 @@ function Footer({}: Props) {
       </div>
       <div className="border-t border-border mt-8 pt-6 text-center">
         <p className="text-xs text-muted-foreground font-body">
-          Â© 2026 ArsenalX. All specifications are approximate.
+          Copyright 2026 ArsenalX. All specifications are approximate.
         </p>
       </div>
     </div>

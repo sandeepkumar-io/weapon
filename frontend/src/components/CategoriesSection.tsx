@@ -1,6 +1,3 @@
-﻿import { categories } from "@/lib/weapons";
-import CategoryCard from "./CategoryCard";
-
 const CategoriesSection = () => {
   return (
     <section className="py-20">
@@ -12,18 +9,6 @@ const CategoriesSection = () => {
           </h2>
           <div className="w-20 h-0.5 bg-primary/50 mx-auto mt-4" />
         </div>
-
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-          {categories.map((cat, i) => (
-            <div
-              key={cat.id}
-              className="animate-slide-up"
-              style={{ animationDelay: `${i * 0.1}s`, opacity: 0 }}
-            >
-              <CategoryCard category={cat} />
-            </div>
-          ))}
-        </div> */}
       </div>
     </section>
   );

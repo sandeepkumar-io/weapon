@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-         "tactical-dark": "#0f172a",
+         "tactical-dark": "#fff7ed",
       },
     },
   },
