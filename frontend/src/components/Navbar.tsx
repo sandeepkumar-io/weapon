@@ -27,6 +27,36 @@ function Navbar({ }: Props) {
                             }`}>
                             Home
                         </Link>
+                        <Link href={"/fighter-jets"} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === "/fighter-jets"
+                            ? 'text-primary'
+                            : 'text-foreground'
+                            }`}>
+                            Jets
+                        </Link>
+                        <Link href={"/jet-engines"} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === "/jet-engines"
+                            ? 'text-primary'
+                            : 'text-foreground'
+                            }`}>
+                            Engines
+                        </Link>
+                        <Link href={"/rifles"} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === "/rifles"
+                            ? 'text-primary'
+                            : 'text-foreground'
+                            }`}>
+                            Rifles
+                        </Link>
+                        <Link href={"/sniper-rifles"} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === "/sniper-rifles"
+                            ? 'text-primary'
+                            : 'text-foreground'
+                            }`}>
+                            Snipers
+                        </Link>
+                        <Link href={"/pistol-bullets"} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === "/pistol-bullets"
+                            ? 'text-primary'
+                            : 'text-foreground'
+                            }`}>
+                            Ammo
+                        </Link>
                         {categories.map((cat) => (
                             <Link key={cat.id} href={`/category/${cat.id}`} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === `/category/${cat.id}`
                                 ? 'text-primary'
@@ -56,6 +86,36 @@ function Navbar({ }: Props) {
                             : 'text-foreground'
                             }`}>
                             Home
+                        </Link>
+                        <Link href={"/fighter-jets"} className={`block px-4 py-3 text-sm font-body font-semibold tracking-wider uppercase ${pathname === "/fighter-jets"
+                            ? 'text-primary'
+                            : 'text-foreground'
+                            }`}>
+                            Fighter Jets
+                        </Link>
+                        <Link href={"/jet-engines"} className={`block px-4 py-3 text-sm font-body font-semibold tracking-wider uppercase ${pathname === "/jet-engines"
+                            ? 'text-primary'
+                            : 'text-foreground'
+                            }`}>
+                            Jet Engines
+                        </Link>
+                        <Link href={"/rifles"} className={`block px-4 py-3 text-sm font-body font-semibold tracking-wider uppercase ${pathname === "/rifles"
+                            ? 'text-primary'
+                            : 'text-foreground'
+                            }`}>
+                            Rifles
+                        </Link>
+                        <Link href={"/sniper-rifles"} className={`block px-4 py-3 text-sm font-body font-semibold tracking-wider uppercase ${pathname === "/sniper-rifles"
+                            ? 'text-primary'
+                            : 'text-foreground'
+                            }`}>
+                            Sniper Rifles
+                        </Link>
+                        <Link href={"/pistol-bullets"} className={`block px-4 py-3 text-sm font-body font-semibold tracking-wider uppercase ${pathname === "/pistol-bullets"
+                            ? 'text-primary'
+                            : 'text-foreground'
+                            }`}>
+                            Pistol Bullets
                         </Link>
                         {categories.map((cat) => (
                             <Link key={cat.id} href={`/category/${cat.id}`} className={`block px-4 py-3 text-sm font-body font-semibold tracking-wider uppercase ${pathname === `/category/${cat.id}`
