@@ -8,7 +8,7 @@ const FeaturedWeapons = ({ hideHeader }: { hideHeader?: boolean }) => {
   const featuredWeapons = weapons.filter((w) => featured.includes(w.id));
 
   return (
-    <section className="py-20 bg-orange-50">
+    <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
         {!hideHeader && (
           <div className="text-center mb-12">

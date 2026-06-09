@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #000000;
   --foreground: #1f2937;
   --muted-foreground: #6b7280;
   --border: #fed7aa;
@@ -15,8 +15,8 @@
   --color-muted: #ffedd5;
   --color-tactical-dark: #fff7ed;
   --color-primary: #f97316;
-  --color-primary-foreground: #ffffff;
-  --color-card-gradient: #ffffff;
+  --color-primary-foreground: #000000;
+  --color-card-gradient: #120d0d;
   --font-display: var(--font-geist-sans);
   --font-body: var(--font-geist-sans);
   --font-sans: var(--font-geist-sans);
@@ -34,10 +34,5 @@ body {
 }
 
 .hero-overlay {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.76) 0%,
-    rgba(255, 247, 237, 0.68) 52%,
-    rgba(255, 255, 255, 0.82) 100%
-  );
+  background: transparent;
 }

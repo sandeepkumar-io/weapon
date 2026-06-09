@@ -5,7 +5,7 @@ const CategoryCard = ({ category }: { category: Category }) => {
   return (
     <Link href={`/category/${category.id}`}>
       <div
-        className="relative bg-white border border-border rounded-lg p-6 cursor-pointer overflow-hidden shadow-sm"
+        className="relative bg-background border rounded-lg p-6 cursor-pointer overflow-hidden shadow-sm"
       >
         <div className="absolute -right-4 -bottom-6 text-8xl font-display text-orange-100 select-none">
           {category.count}

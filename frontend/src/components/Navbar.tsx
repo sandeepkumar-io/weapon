@@ -9,7 +9,7 @@ function Navbar({ }: Props) {
     const [togglemenu, setTogglemenu] = React.useState(false)
     const pathname = usePathname()
     return (
-        <nav className='fixed top-0 right-0 left-0 z-50 border-border border-b bg-white/95 backdrop-blur-md'>
+        <nav className='fixed top-0 right-0 left-0 z-50 border-b bg-background backdrop-blur-md'>
             <div className='container mx-auto px-4'>
                 <div className='flex items-center justify-between h-16'>
                     <Link href={"/"} className='flex items-center gap-2'>
@@ -23,44 +23,44 @@ function Navbar({ }: Props) {
                     <div className='hidden md:flex items-center gap-1 flex-wrap'>
                         <Link href={"/"} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === "/"
                             ? 'text-primary'
-                            : 'text-foreground'
+                            : 'text-primary'
                             }`}>
                             Home
                         </Link>
                         <Link href={"/fighter-jets"} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === "/fighter-jets"
                             ? 'text-primary'
-                            : 'text-foreground'
+                            : 'text-primary'
                             }`}>
                             Jets
                         </Link>
                         <Link href={"/jet-engines"} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === "/jet-engines"
                             ? 'text-primary'
-                            : 'text-foreground'
+                            : 'text-primary'
                             }`}>
                             Engines
                         </Link>
                         <Link href={"/rifles"} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === "/rifles"
                             ? 'text-primary'
-                            : 'text-foreground'
+                            : 'text-primary'
                             }`}>
                             Rifles
                         </Link>
                         <Link href={"/sniper-rifles"} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === "/sniper-rifles"
                             ? 'text-primary'
-                            : 'text-foreground'
+                            : 'text-primary'
                             }`}>
                             Snipers
                         </Link>
                         <Link href={"/pistol-bullets"} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === "/pistol-bullets"
                             ? 'text-primary'
-                            : 'text-foreground'
+                            : 'text-primary'
                             }`}>
                             Ammo
                         </Link>
                         {categories.map((cat) => (
                             <Link key={cat.id} href={`/category/${cat.id}`} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === `/category/${cat.id}`
                                 ? 'text-primary'
-                                : 'text-foreground'
+                                : 'text-primary'
                                 }`}>
                                 {cat.name}
                             </Link>
