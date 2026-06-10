@@ -139,7 +139,7 @@ export default function JetEnginesPage() {
                   origin={item.origin}
                   description={item.description}
                   specs={item.specs}
-                  imageUrl={getImageUrlForRifle(item.name)}
+                  imageUrl={(item as any).imageUrl || getImageUrlForRifle(item.name)}
                   additionalInfo={[
                     { label: 'Manufacturer', value: item.manufacturer },
                     { label: 'Thrust', value: item.thrust },

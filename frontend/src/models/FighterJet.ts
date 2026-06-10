@@ -20,6 +20,7 @@ export interface IFighterJet extends Document {
   crew: string;
   description: string;
   images: string;
+  imageUrl: string;
   specs: { label: string; value: string }[];
 }
 
@@ -44,6 +45,7 @@ const fighterJetSchema = new Schema<IFighterJet>(
     crew: { type: String, required: false },
     description: { type: String, required: true },
     images: String,
+    imageUrl: { type: String, required: false },
     specs: [
       {
         label: { type: String, required: true },

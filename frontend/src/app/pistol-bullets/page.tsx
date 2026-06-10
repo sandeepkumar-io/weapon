@@ -140,7 +140,7 @@ export default function PistolBulletsPage() {
                   origin={item.origin}
                   description={item.description}
                   specs={item.specs}
-                  imageUrl={getImageUrlForRifle(item.name)}
+                  imageUrl={(item as any).imageUrl || getImageUrlForRifle(item.name)}
                   additionalInfo={[
                     { label: 'Caliber', value: item.caliber },
                     { label: 'Velocity', value: item.muzzle_velocity },

@@ -165,7 +165,7 @@ export default function SniperRiflesPage() {
                   weight={rifle.weight}
                   description={rifle.description}
                   specs={rifle.specs}
-                  imageUrl={getImageUrlForRifle(rifle.name)}
+                  imageUrl={(rifle as any).imageUrl || getImageUrlForRifle(rifle.name)}
                   detailPath={`/sniper-rifles/${encodeURIComponent(rifle.id)}`}
                 />
               ))}

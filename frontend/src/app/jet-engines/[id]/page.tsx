@@ -174,7 +174,7 @@ export default function JetEngineDetailPage() {
       dryThrust={dryThrust}
       usedIn={(engine as any).used_in || engine.usedIn}
       specs={specsWithIcons}
-      imageUrl={getImageUrlForRifle(engine.name)}
+      imageUrl={(engine as any).imageUrl || getImageUrlForRifle(engine.name)}
       relatedEngines={relatedEngines}
       onViewDatasheet={() => {
         alert(`Datasheet for ${engine.name} would be downloaded here`);

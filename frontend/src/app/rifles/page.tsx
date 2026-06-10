@@ -140,7 +140,7 @@ export default function RiflesPage() {
                   origin={item.origin}
                   description={item.description}
                   specs={item.specs}
-                  imageUrl={getImageUrlForRifle(item.name)}
+                  imageUrl={(item as any).imageUrl || getImageUrlForRifle(item.name)}
                   additionalInfo={[
                     { label: 'Caliber', value: item.caliber },
                     { label: 'Range', value: item.range },

@@ -139,9 +139,9 @@ export default function FighterJetsPage() {
                   origin={item.origin}
                   description={item.description}
                   specs={item.specs}
-                  imageUrl={getImageUrlForRifle(item.name)}
+                  imageUrl={(item as any).imageUrl || getImageUrlForRifle(item.name)}
                   additionalInfo={[
-                    { label: 'Speed', value: item.speed },
+                    { label: 'Speed', value: item.max_speed },
                     { label: 'Range', value: item.range },
                   ]}
                   detailPath={`/fighter-jets/${encodeURIComponent(item.id)}`}
