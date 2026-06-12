@@ -1,6 +1,6 @@
 'use client';
 
-import { CSSProperties } from 'react';
+import { CSSProperties, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface Spec {
@@ -34,19 +34,20 @@ interface JetEngineDetailCardProps {
   usedIn?: string;
   specs: Spec[];
   imageUrl: string;
+  generatedImages?: string[];
   relatedEngines?: RelatedEngine[];
   onViewDatasheet?: () => void;
 }
 
 const cssVars = {
-  '--bg': '#16181d',
-  '--card': '#1f2228',
-  '--card-2': '#23262d',
-  '--border': '#2d3138',
-  '--fg': '#f5f1ea',
-  '--muted': '#8a8f99',
-  '--primary': '#e85d3a',
-  '--primary-glow': '#f59a4e',
+  '--bg': '#0a0505',
+  '--card': '#160808',
+  '--card-2': '#1f0a0a',
+  '--border': '#2a1010',
+  '--fg': '#ededed',
+  '--muted': '#a1a1aa',
+  '--primary': '#ef4444',
+  '--primary-glow': '#dc2626',
 } as CSSProperties;
 
 export default function JetEngineDetailCard({
@@ -61,10 +62,18 @@ export default function JetEngineDetailCard({
   usedIn = 'Unknown',
   specs,
   imageUrl,
+  generatedImages,
   relatedEngines = [],
   onViewDatasheet,
 }: JetEngineDetailCardProps) {
   const router = useRouter();
+
+  const galleryImages = generatedImages && generatedImages.length > 0 ? generatedImages : [imageUrl];
+  const [imgIndex, setImgIndex] = useState(0);
+  const currentImage = galleryImages[imgIndex];
+
+  const nextImg = () => setImgIndex((p) => (p + 1) % galleryImages.length);
+  const prevImg = () => setImgIndex((p) => (p - 1 + galleryImages.length) % galleryImages.length);
 
   const handleRelatedEngineClick = (engineId: string) => {
     router.push(`/jet-engines/${encodeURIComponent(engineId)}`);
@@ -74,17 +83,17 @@ export default function JetEngineDetailCard({
     <div style={{ ...cssVars, background: 'var(--bg)' } as CSSProperties} className="min-h-screen">
       <style>{`
         :root {
-          --bg: #16181d;
-          --card: #1f2228;
-          --card-2: #23262d;
-          --border: #2d3138;
-          --fg: #f5f1ea;
-          --muted: #8a8f99;
-          --primary: #e85d3a;
-          --primary-glow: #f59a4e;
-          --gradient-ember: linear-gradient(135deg, #e85d3a, #f59a4e);
-          --gradient-surface: linear-gradient(160deg, #23262d, #181b20);
-          --shadow-ember: 0 20px 60px -20px rgba(232, 93, 58, 0.35);
+          --bg: #0a0505;
+          --card: #160808;
+          --card-2: #1f0a0a;
+          --border: #2a1010;
+          --fg: #ededed;
+          --muted: #a1a1aa;
+          --primary: #ef4444;
+          --primary-glow: #dc2626;
+          --gradient-ember: linear-gradient(135deg, #ef4444, #dc2626);
+          --gradient-surface: linear-gradient(160deg, #1f0a0a, #0a0505);
+          --shadow-ember: 0 20px 60px -20px rgba(239, 68, 68, 0.35);
           --shadow-deep: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
         }
         * {
@@ -100,7 +109,7 @@ export default function JetEngineDetailCard({
           letter-spacing: -0.01em;
         }
         .wrap {
-          max-width: 1120px;
+          max-width: 1600px;
           margin: 0 auto;
           padding: 48px 20px;
         }
@@ -124,8 +133,8 @@ export default function JetEngineDetailCard({
           vertical-align: middle;
         }
         .status-pill {
-          border: 1px solid rgba(232, 93, 58, 0.3);
-          background: rgba(232, 93, 58, 0.1);
+          border: 1px solid rgba(239, 68, 68, 0.3);
+          background: rgba(239, 68, 68, 0.1);
           color: var(--primary);
           padding: 5px 12px;
           border-radius: 999px;
@@ -166,7 +175,7 @@ export default function JetEngineDetailCard({
           position: relative;
           aspect-ratio: 4/3;
           overflow: hidden;
-          background: linear-gradient(135deg, #23262d, #16181d);
+          background: linear-gradient(135deg, #1f0a0a, #0a0505);
           border-right: 1px solid var(--border);
         }
         @media (max-width: 900px) {
@@ -204,8 +213,8 @@ export default function JetEngineDetailCard({
           position: absolute;
           bottom: 24px;
           left: 24px;
-          border: 1px solid rgba(232, 93, 58, 0.4);
-          background: rgba(22, 24, 29, 0.7);
+          border: 1px solid rgba(239, 68, 68, 0.4);
+          background: rgba(10, 5, 5, 0.7);
           backdrop-filter: blur(10px);
           padding: 12px 20px;
           border-radius: 16px;
@@ -407,7 +416,7 @@ export default function JetEngineDetailCard({
         }
         .rcard:hover {
           transform: translateY(-4px);
-          border-color: rgba(232, 93, 58, 0.4);
+          border-color: rgba(239, 68, 68, 0.4);
         }
         .rcard .imgbox {
           position: relative;
@@ -509,13 +518,53 @@ export default function JetEngineDetailCard({
           <div className="grid-main">
             {/* Image section */}
             <div className="imgwrap">
-              <img src={imageUrl} alt={name} />
+              <img src={currentImage} alt={name} />
               <div className="img-fade"></div>
               <div className="id-tag"><span className="dot" style={{ margin: 0 }}></span>ID · {id}</div>
               <div className="thrust-badge">
                 <div className="lbl">Max Thrust w/ AB</div>
                 <div className="val">{maxThrustWithAB}</div>
               </div>
+
+              {/* Gallery controls */}
+              {galleryImages.length > 1 && (
+                <>
+                  <button
+                    onClick={prevImg}
+                    aria-label="Previous image"
+                    style={{
+                      position: 'absolute', left: 16, top: '50%', transform: 'translateY(-50%)',
+                      width: 36, height: 36, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.15)',
+                      background: 'rgba(0,0,0,0.5)', color: '#fff', cursor: 'pointer', fontSize: 18, lineHeight: 1,
+                    }}
+                  >‹</button>
+                  <button
+                    onClick={nextImg}
+                    aria-label="Next image"
+                    style={{
+                      position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)',
+                      width: 36, height: 36, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.15)',
+                      background: 'rgba(0,0,0,0.5)', color: '#fff', cursor: 'pointer', fontSize: 18, lineHeight: 1,
+                    }}
+                  >›</button>
+                  <div style={{
+                    position: 'absolute', bottom: 24, right: 24, display: 'flex', gap: 6,
+                  }}>
+                    {galleryImages.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setImgIndex(idx)}
+                        aria-label={`Image ${idx + 1}`}
+                        style={{
+                          width: idx === imgIndex ? 20 : 8, height: 8, borderRadius: 999, border: 'none', padding: 0,
+                          background: idx === imgIndex ? 'var(--primary)' : 'rgba(255,255,255,0.5)',
+                          cursor: 'pointer', transition: 'all 0.2s',
+                        }}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
 
             {/* Info section */}

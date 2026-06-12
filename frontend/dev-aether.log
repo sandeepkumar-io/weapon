@@ -1,0 +1,17 @@
+
+> frontend@0.1.0 dev
+> next dev
+
+⚠ Port 3000 is in use by process 33960, using available port 3001 instead.
+▲ Next.js 16.1.6 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.1.61:3001
+- Environments: .env.local
+
+✓ Starting...
+✓ Ready in 1011ms
+ GET /aether 200 in 1094ms (compile: 864ms, render: 230ms)
+ GET / 200 in 116ms (compile: 30ms, render: 86ms)
+ GET /fighter-jets 200 in 61ms (compile: 25ms, render: 37ms)
+ GET /aether 200 in 107ms (compile: 4ms, render: 103ms)
+✓ Compiled in 150ms

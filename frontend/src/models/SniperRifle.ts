@@ -24,6 +24,7 @@ export interface ISniperRifle extends Document {
   used_by?: string;
   description: string;
   images?: string;
+  generatedImages?: string[];
   specs: { label: string; value: string }[];
 }
 
@@ -52,6 +53,7 @@ const sniperRifleSchema = new Schema<ISniperRifle>(
     used_by: { type: String, required: false },
     description: { type: String, required: true },
     images: { type: String, required: false },
+    generatedImages: [{ type: String }],
     specs: [
       {
         label: { type: String, required: true },

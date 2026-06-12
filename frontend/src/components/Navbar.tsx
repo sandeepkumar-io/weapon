@@ -2,7 +2,6 @@
 import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { categories } from '@/lib/weapons'
 
 type Props = {}
 function Navbar({ }: Props) {
@@ -57,15 +56,6 @@ function Navbar({ }: Props) {
                             }`}>
                             Ammo
                         </Link>
-                        {categories.map((cat) => (
-                            <Link key={cat.id} href={`/category/${cat.id}`} className={`px-2 py-2 text-xs lg:text-sm font-body font-semibold tracking-wider uppercase whitespace-nowrap ${pathname === `/category/${cat.id}`
-                                ? 'text-primary'
-                                : 'text-primary'
-                                }`}>
-                                {cat.name}
-                            </Link>
-                        ))}
-
                     </div>
                     <button
                     className="md:hidden text-foreground p-2"
@@ -80,7 +70,7 @@ function Navbar({ }: Props) {
                 </button>
                 </div >
                 {togglemenu && (
-                    <div className='md:hidden absolute top-16 left-0 right-0 bg-white border-t border-border shadow-sm'>
+                    <div className='md:hidden absolute top-16 left-0 right-0 bg-[#0a0505] border-t border-border shadow-lg'>
                         <Link href={"/"} className={`block px-4 py-3 text-sm font-body font-semibold tracking-wider uppercase ${pathname === "/"
                             ? 'text-primary'
                             : 'text-foreground'
@@ -117,14 +107,6 @@ function Navbar({ }: Props) {
                             }`}>
                             Pistol Bullets
                         </Link>
-                        {categories.map((cat) => (
-                            <Link key={cat.id} href={`/category/${cat.id}`} className={`block px-4 py-3 text-sm font-body font-semibold tracking-wider uppercase ${pathname === `/category/${cat.id}`
-                                ? 'text-primary'
-                                : 'text-foreground'
-                                }`}>
-                                {cat.name}
-                            </Link>
-                        ))}
                     </div>
                 )}
             </div>

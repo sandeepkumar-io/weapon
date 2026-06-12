@@ -2,9 +2,9 @@
 
 :root {
   --background: #000000;
-  --foreground: #1f2937;
-  --muted-foreground: #6b7280;
-  --border: #fed7aa;
+  --foreground: #ededed;
+  --muted-foreground: #a1a1aa;
+  --border: #3f1414;
 }
 
 @theme inline {
@@ -12,15 +12,52 @@
   --color-foreground: var(--foreground);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --color-muted: #ffedd5;
-  --color-tactical-dark: #fff7ed;
-  --color-primary: #f97316;
-  --color-primary-foreground: #000000;
-  --color-card-gradient: #120d0d;
+  --color-muted: #1a0a0a;
+  --color-tactical-dark: #0a0505;
+  --color-primary: #dc2626;
+  --color-primary-foreground: #ffffff;
+  --color-card-gradient: #160808;
   --font-display: var(--font-geist-sans);
   --font-body: var(--font-geist-sans);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+/* ============================================================
+   BLACK + RED retheme + 1600px page width
+   Remaps the slate -> black and blue -> red palettes at the
+   token level, so every existing utility class across all pages
+   adopts the new theme with no per-file edits.
+   ============================================================ */
+@theme {
+  /* Page shell: widen max-w-7xl (default 80rem) to 1600px */
+  --container-7xl: 100rem;
+
+  /* slate -> black/red-tinted neutrals */
+  --color-slate-950: #000000;
+  --color-slate-900: #0a0505;
+  --color-slate-800: #160808;
+  --color-slate-700: #2a1010;
+  --color-slate-600: #3d1616;
+  --color-slate-500: #5a2020;
+  --color-slate-400: #9ca3af;
+  --color-slate-300: #d1d5db;
+  --color-slate-200: #e5e7eb;
+
+  /* blue -> red accents */
+  --color-blue-300: #f87171;
+  --color-blue-400: #ef4444;
+  --color-blue-500: #ef4444;
+  --color-blue-600: #dc2626;
+  --color-blue-700: #b91c1c;
+  --color-blue-800: #991b1b;
+  --color-blue-900: #450a0a;
+}
+
+/* Cap every `container` at 1600px and center it */
+@utility container {
+  margin-inline: auto;
+  max-width: 100rem;
 }
 
 body {

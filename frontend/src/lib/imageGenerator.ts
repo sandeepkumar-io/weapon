@@ -1,26 +1,34 @@
 export function getImageUrlForRifle(rifleName: string): string {
-  // Using DiceBear Avatars API - highly reliable, no CORS issues
-  // Creates unique images based on rifle name
+  // Premium placeholder image with gradient and name
+  // Creates unique, high-quality placeholders for weapons without Wikipedia images
 
   const encodedName = encodeURIComponent(rifleName);
 
-  // Use different styles for variety
-  const styles = ['initials', 'shapes'];
-  const hash = rifleName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const styleIndex = hash % styles.length;
-  const style = styles[styleIndex];
+  // Premium gradient colors for weapon cards
+  const gradients = [
+    'c0392b,e74c3c', // Red gradient
+    '2c3e50,34495e', // Blue-gray gradient
+    '8e44ad,9b59b6', // Purple gradient
+    '27ae60,2ecc71', // Green gradient
+    'e67e22,f39c12', // Orange gradient
+    'd35400,e74c3c', // Dark orange gradient
+    '16a085,1abc9c', // Teal gradient
+    'c0392b,d32f2f', // Deep red gradient
+  ];
 
-  return `https://api.dicebear.com/7.x/${style}/svg?seed=${encodedName}&backgroundColor=1e293b,0f172a,1e1b4b&scale=100`;
+  const hash = rifleName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const gradientIndex = hash % gradients.length;
+  const gradient = gradients[gradientIndex];
+
+  // UI Avatars with premium styling
+  return `https://ui-avatars.com/api/?name=${encodedName}&background=${gradient}&color=ffffff&size=800&font-size=0.35&bold=true&format=svg`;
 }
 
 export function getFallbackImageUrl(rifleName: string): string {
-  // Fallback placeholder image with rifle name
-  const encodedName = encodeURIComponent(rifleName);
-
-  const colors = ['1e293b', '0f172a', '1e1b4b', '172554', '1e3a8a'];
+  // High-quality fallback with Picsum (real photos) or premium placeholder
   const hash = rifleName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const colorIndex = hash % colors.length;
-  const bgColor = colors[colorIndex];
 
-  return `https://ui-avatars.com/api/?name=${encodedName}&background=${bgColor}&color=ffffff&size=800&font-size=0.3&bold=true`;
+  // Use Picsum (nice photography) as fallback
+  // Falls back gracefully with color gradient if unavailable
+  return `https://picsum.photos/800/600?random=${hash}`;
 }

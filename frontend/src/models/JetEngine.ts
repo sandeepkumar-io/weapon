@@ -21,6 +21,7 @@ export interface IJetEngine extends Document {
   used_in?: string;
   description: string;
   images?: string;
+  generatedImages?: string[];
   specs: { label: string; value: string }[];
 }
 
@@ -46,6 +47,7 @@ const jetEngineSchema = new Schema<IJetEngine>(
     used_in: { type: String, required: false },
     description: { type: String, required: true },
     images: { type: String, required: false },
+    generatedImages: [{ type: String }],
     specs: [
       {
         label: { type: String, required: true },

@@ -61,7 +61,7 @@ export default function JetEnginesPage() {
 
   return (
     <div className="min-h-screen bg-slate-950" style={{
-      background: 'linear-gradient(to bottom, rgba(6, 21, 43, 1), rgba(15, 23, 42, 1))'
+      background: 'linear-gradient(to bottom, #160808, #000000)'
     }}>
       <div className="relative pt-20 pb-16 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">
@@ -139,7 +139,7 @@ export default function JetEnginesPage() {
                   origin={item.origin}
                   description={item.description}
                   specs={item.specs}
-                  imageUrl={(item as any).imageUrl || getImageUrlForRifle(item.name)}
+                  imageUrl={(item as any).generatedImages?.[0] || getImageUrlForRifle(item.name)}
                   additionalInfo={[
                     { label: 'Manufacturer', value: item.manufacturer },
                     { label: 'Thrust', value: item.thrust },

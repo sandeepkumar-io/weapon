@@ -89,7 +89,7 @@ export default function JetEngineDetailPage() {
               thrust: e.thrust,
               usedIn: (e as any).used_in || e.usedIn || 'Unknown',
               status: 'Active',
-              imageUrl: getImageUrlForRifle(e.name),
+              imageUrl: (e as any).generatedImages?.[0] || getImageUrlForRifle(e.name),
             }));
 
           setRelatedEngines(related);
@@ -109,7 +109,7 @@ export default function JetEngineDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center" style={{
-        background: 'linear-gradient(to bottom, rgba(6, 21, 43, 1), rgba(15, 23, 42, 1))'
+        background: 'linear-gradient(to bottom, #160808, #000000)'
       }}>
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
@@ -122,7 +122,7 @@ export default function JetEngineDetailPage() {
   if (error || !engine) {
     return (
       <div className="min-h-screen bg-slate-950" style={{
-        background: 'linear-gradient(to bottom, rgba(6, 21, 43, 1), rgba(15, 23, 42, 1))'
+        background: 'linear-gradient(to bottom, #160808, #000000)'
       }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-20">
           <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 text-red-300">
@@ -175,6 +175,7 @@ export default function JetEngineDetailPage() {
       usedIn={(engine as any).used_in || engine.usedIn}
       specs={specsWithIcons}
       imageUrl={(engine as any).imageUrl || getImageUrlForRifle(engine.name)}
+      generatedImages={(engine as any).generatedImages}
       relatedEngines={relatedEngines}
       onViewDatasheet={() => {
         alert(`Datasheet for ${engine.name} would be downloaded here`);

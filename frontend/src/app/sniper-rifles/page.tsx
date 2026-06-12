@@ -65,7 +65,7 @@ export default function SniperRiflesPage() {
 
   return (
     <div className="min-h-screen bg-slate-950" style={{
-      background: 'linear-gradient(to bottom, rgba(6, 21, 43, 1), rgba(15, 23, 42, 1))'
+      background: 'linear-gradient(to bottom, #160808, #000000)'
     }}>
       {/* Header */}
       <div className="relative pt-20 pb-16 px-4 md:px-8">
@@ -165,7 +165,7 @@ export default function SniperRiflesPage() {
                   weight={rifle.weight}
                   description={rifle.description}
                   specs={rifle.specs}
-                  imageUrl={(rifle as any).imageUrl || getImageUrlForRifle(rifle.name)}
+                  imageUrl={(rifle as any).generatedImages?.[0] || getImageUrlForRifle(rifle.name)}
                   detailPath={`/sniper-rifles/${encodeURIComponent(rifle.id)}`}
                 />
               ))}

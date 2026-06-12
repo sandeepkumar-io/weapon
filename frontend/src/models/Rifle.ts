@@ -10,6 +10,7 @@ export interface IRifle extends Document {
   weight?: string;
   description: string;
   images?: string;
+  generatedImages?: string[];
   specs: { label: string; value: string }[];
 }
 
@@ -24,6 +25,7 @@ const rifleSchema = new Schema<IRifle>(
     weight: { type: String, required: false },
     description: { type: String, required: true },
     images: { type: String, required: false },
+    generatedImages: [{ type: String }],
     specs: [
       {
         label: { type: String, required: true },
