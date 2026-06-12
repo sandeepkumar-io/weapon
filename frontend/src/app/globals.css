@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
-  --foreground: #ededed;
-  --muted-foreground: #a1a1aa;
-  --border: #3f1414;
+  --background: #061831;
+  --foreground: #e6edf6;
+  --muted-foreground: #93a4c0;
+  --border: #1e3a5f;
 }
 
 @theme inline {
@@ -12,11 +12,11 @@
   --color-foreground: var(--foreground);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --color-muted: #1a0a0a;
-  --color-tactical-dark: #0a0505;
-  --color-primary: #dc2626;
+  --color-muted: #0e2547;
+  --color-tactical-dark: #07172e;
+  --color-primary: #3b82f6;
   --color-primary-foreground: #ffffff;
-  --color-card-gradient: #160808;
+  --color-card-gradient: #0c2348;
   --font-display: var(--font-geist-sans);
   --font-body: var(--font-geist-sans);
   --font-sans: var(--font-geist-sans);
@@ -24,34 +24,12 @@
 }
 
 /* ============================================================
-   BLACK + RED retheme + 1600px page width
-   Remaps the slate -> black and blue -> red palettes at the
-   token level, so every existing utility class across all pages
-   adopts the new theme with no per-file edits.
+   BLUE theme (matches the hero) + 1600px page width.
+   slate stays its default blue-gray and blue stays blue, so all
+   existing utility classes read correctly in the blue theme.
    ============================================================ */
 @theme {
-  /* Page shell: widen max-w-7xl (default 80rem) to 1600px */
-  --container-7xl: 100rem;
-
-  /* slate -> black/red-tinted neutrals */
-  --color-slate-950: #000000;
-  --color-slate-900: #0a0505;
-  --color-slate-800: #160808;
-  --color-slate-700: #2a1010;
-  --color-slate-600: #3d1616;
-  --color-slate-500: #5a2020;
-  --color-slate-400: #9ca3af;
-  --color-slate-300: #d1d5db;
-  --color-slate-200: #e5e7eb;
-
-  /* blue -> red accents */
-  --color-blue-300: #f87171;
-  --color-blue-400: #ef4444;
-  --color-blue-500: #ef4444;
-  --color-blue-600: #dc2626;
-  --color-blue-700: #b91c1c;
-  --color-blue-800: #991b1b;
-  --color-blue-900: #450a0a;
+  --container-7xl: 100rem; /* widen max-w-7xl to 1600px */
 }
 
 /* Cap every `container` at 1600px and center it */
@@ -61,9 +39,12 @@
 }
 
 body {
-  background: var(--background);
+  background:
+    radial-gradient(120% 90% at 50% 0%, #133a78 0%, #0b2a5c 45%, #061831 100%) no-repeat fixed,
+    #061831;
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
 }
 
 .hide-header .text-center {

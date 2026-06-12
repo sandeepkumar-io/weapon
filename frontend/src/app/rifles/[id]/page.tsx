@@ -68,7 +68,7 @@ export default function RifleDetailPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center" style={{
-        background: 'linear-gradient(to bottom, #160808, #000000)'
+        background: 'linear-gradient(to bottom, #0b2a5c, #061831)'
       }}>
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
@@ -81,7 +81,7 @@ export default function RifleDetailPage() {
   if (error || !rifle) {
     return (
       <div className="min-h-screen bg-slate-950" style={{
-        background: 'linear-gradient(to bottom, #160808, #000000)'
+        background: 'linear-gradient(to bottom, #0b2a5c, #061831)'
       }}>
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-20">
           <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 text-red-300">
@@ -97,7 +97,7 @@ export default function RifleDetailPage() {
 
   return (
     <div className="min-h-screen bg-slate-950" style={{
-      background: 'linear-gradient(to bottom, #160808, #000000)'
+      background: 'linear-gradient(to bottom, #0b2a5c, #061831)'
     }}>
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-20">
         <button onClick={() => router.back()} className="mb-6 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors">

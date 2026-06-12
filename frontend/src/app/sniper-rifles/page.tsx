@@ -65,7 +65,7 @@ export default function SniperRiflesPage() {
 
   return (
     <div className="min-h-screen bg-slate-950" style={{
-      background: 'linear-gradient(to bottom, #160808, #000000)'
+      background: 'linear-gradient(to bottom, #0b2a5c, #061831)'
     }}>
       {/* Header */}
       <div className="relative pt-20 pb-16 px-4 md:px-8">

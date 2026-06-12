@@ -61,7 +61,7 @@ export default function JetEnginesPage() {
 
   return (
     <div className="min-h-screen bg-slate-950" style={{
-      background: 'linear-gradient(to bottom, #160808, #000000)'
+      background: 'linear-gradient(to bottom, #0b2a5c, #061831)'
     }}>
       <div className="relative pt-20 pb-16 px-4 md:px-8">
         <div className="max-w-7xl mx-auto">

@@ -20,6 +20,7 @@ export interface IPistolBullet extends Document {
   description: string;
   images?: string;
   generatedImages?: string[];
+  diagramImage?: string;
   specs: { label: string; value: string }[];
 }
 
@@ -44,6 +45,7 @@ const pistolBulletSchema = new Schema<IPistolBullet>(
     description: { type: String, required: true },
     images: { type: String, required: false },
     generatedImages: [{ type: String }],
+    diagramImage: { type: String, required: false },
     specs: [
       {
         label: { type: String, required: true },

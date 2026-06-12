@@ -40,14 +40,14 @@ interface JetEngineDetailCardProps {
 }
 
 const cssVars = {
-  '--bg': '#0a0505',
-  '--card': '#160808',
-  '--card-2': '#1f0a0a',
-  '--border': '#2a1010',
+  '--bg': '#061831',
+  '--card': '#0c2348',
+  '--card-2': '#0e2a52',
+  '--border': '#1e3a5f',
   '--fg': '#ededed',
   '--muted': '#a1a1aa',
-  '--primary': '#ef4444',
-  '--primary-glow': '#dc2626',
+  '--primary': '#3b82f6',
+  '--primary-glow': '#60a5fa',
 } as CSSProperties;
 
 export default function JetEngineDetailCard({
@@ -83,17 +83,17 @@ export default function JetEngineDetailCard({
     <div style={{ ...cssVars, background: 'var(--bg)' } as CSSProperties} className="min-h-screen">
       <style>{`
         :root {
-          --bg: #0a0505;
-          --card: #160808;
-          --card-2: #1f0a0a;
-          --border: #2a1010;
+          --bg: #061831;
+          --card: #0c2348;
+          --card-2: #0e2a52;
+          --border: #1e3a5f;
           --fg: #ededed;
           --muted: #a1a1aa;
-          --primary: #ef4444;
-          --primary-glow: #dc2626;
-          --gradient-ember: linear-gradient(135deg, #ef4444, #dc2626);
-          --gradient-surface: linear-gradient(160deg, #1f0a0a, #0a0505);
-          --shadow-ember: 0 20px 60px -20px rgba(239, 68, 68, 0.35);
+          --primary: #3b82f6;
+          --primary-glow: #60a5fa;
+          --gradient-ember: linear-gradient(135deg, #3b82f6, #60a5fa);
+          --gradient-surface: linear-gradient(160deg, #0e2a52, #061831);
+          --shadow-ember: 0 20px 60px -20px rgba(59, 130, 246, 0.35);
           --shadow-deep: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
         }
         * {
@@ -133,8 +133,8 @@ export default function JetEngineDetailCard({
           vertical-align: middle;
         }
         .status-pill {
-          border: 1px solid rgba(239, 68, 68, 0.3);
-          background: rgba(239, 68, 68, 0.1);
+          border: 1px solid rgba(59, 130, 246, 0.3);
+          background: rgba(59, 130, 246, 0.1);
           color: var(--primary);
           padding: 5px 12px;
           border-radius: 999px;
@@ -175,7 +175,7 @@ export default function JetEngineDetailCard({
           position: relative;
           aspect-ratio: 4/3;
           overflow: hidden;
-          background: linear-gradient(135deg, #1f0a0a, #0a0505);
+          background: linear-gradient(135deg, #0e2a52, #061831);
           border-right: 1px solid var(--border);
         }
         @media (max-width: 900px) {
@@ -213,8 +213,8 @@ export default function JetEngineDetailCard({
           position: absolute;
           bottom: 24px;
           left: 24px;
-          border: 1px solid rgba(239, 68, 68, 0.4);
-          background: rgba(10, 5, 5, 0.7);
+          border: 1px solid rgba(59, 130, 246, 0.4);
+          background: rgba(6, 24, 49, 0.7);
           backdrop-filter: blur(10px);
           padding: 12px 20px;
           border-radius: 16px;
@@ -416,7 +416,7 @@ export default function JetEngineDetailCard({
         }
         .rcard:hover {
           transform: translateY(-4px);
-          border-color: rgba(239, 68, 68, 0.4);
+          border-color: rgba(59, 130, 246, 0.4);
         }
         .rcard .imgbox {
           position: relative;
