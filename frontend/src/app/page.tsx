@@ -11,6 +11,8 @@ const navCategories: NavCategory[] = [
   { name: 'Rifles', href: '/rifles', icon: '🎯', subtitle: 'Firearms', count: 163, description: 'Assault, battle and service rifles from around the world.' },
   { name: 'Sniper Rifles', href: '/sniper-rifles', icon: '🔭', subtitle: 'Precision', count: 353, description: 'Long-range precision and anti-materiel marksman systems.' },
   { name: 'Pistol Bullets', href: '/pistol-bullets', icon: '🔫', subtitle: 'Ammunition', count: 80, description: 'Handgun cartridges and ammunition specifications.' },
+  { name: 'Air-to-Air Missiles', href: '/air-to-air-missiles', icon: '🚀', subtitle: 'Guided', count: 131, description: 'Beyond-visual-range and short-range air-to-air guided missiles.' },
+  { name: 'Bombers', href: '/bombers', icon: '💣', subtitle: 'Strategic', count: 708, description: 'Strategic, stealth and supersonic bombers from across the world.' },
 ]
 
 function page() {

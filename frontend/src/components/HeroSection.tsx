@@ -132,8 +132,8 @@ function HeroSection() {
           scaleMobile: 1.0,
           size: 1.7,
           backgroundColor: 'transparent',
-          color: '#60a5fa',
-          color2: '#3b82f6',
+          color: '#22d3ee',
+          color2: '#a3e635',
           spacing: 18,
           showLines: true,
           showDots: true,
@@ -152,10 +152,10 @@ function HeroSection() {
 
   return (
     <section
-      className="relative min-h-[90vh] flex items-center justify-center overflow-hidden"
+      className="relative min-h-[100vh] flex items-center justify-center overflow-hidden"
       style={{
         background:
-          'radial-gradient(120% 90% at 50% 0%, #133a78 0%, #0b2a5c 45%, #061831 100%)',
+          'radial-gradient(120% 90% at 50% 0%, #0a1f24 0%, #07141a 45%, #050505 100%)',
         perspective: '1000px',
       }}
     >

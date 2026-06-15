@@ -12,7 +12,7 @@ interface Spec {
   value: string;
 }
 
-interface FighterJet {
+interface Bomber {
   _id: string;
   id: string;
   name: string;
@@ -21,21 +21,21 @@ interface FighterJet {
   manufacturer?: string;
   max_speed?: string;
   range?: string;
+  payload?: string;
   service_ceiling?: string;
-  role?: string;
   description: string;
   generatedImages?: string[];
   specs: Spec[];
   [key: string]: unknown;
 }
 
-const imageFor = (j: FighterJet) => j.generatedImages?.[0] || getImageUrlForRifle(j.name);
+const imageFor = (b: Bomber) => b.generatedImages?.[0] || getImageUrlForRifle(b.name);
 
-export default function FighterJetDetailPage() {
+export default function BomberDetailPage() {
   const params = useParams();
   const id = decodeURIComponent(params.id as string);
 
-  const [data, setData] = useState<FighterJet[]>([]);
+  const [data, setData] = useState<Bomber[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -43,10 +43,10 @@ export default function FighterJetDetailPage() {
     (async () => {
       try {
         setLoading(true);
-        const res = await fetch('/api/fighter-jets');
+        const res = await fetch('/api/bombers');
         const result = await res.json();
         if (result.success) setData(result.data);
-        else setError('Failed to fetch jet data');
+        else setError('Failed to fetch bomber data');
       } catch (err) {
         setError('Error: ' + (err as Error).message);
       } finally {
@@ -55,46 +55,46 @@ export default function FighterJetDetailPage() {
     })();
   }, []);
 
-  const jet = useMemo(
-    () => data.find((j) => j.id?.trim?.().toLowerCase?.() === id?.trim?.().toLowerCase?.()),
+  const bomber = useMemo(
+    () => data.find((b) => b.id?.trim?.().toLowerCase?.() === id?.trim?.().toLowerCase?.()),
     [data, id],
   );
 
   const related: CardItem[] = useMemo(() => {
-    if (!jet) return [];
+    if (!bomber) return [];
     return data
-      .filter((j) => j.id !== jet.id)
+      .filter((b) => b.id !== bomber.id)
       .slice(0, 8)
-      .map((j) => ({
-        id: j.id,
-        name: j.name,
-        image: imageFor(j),
-        badge: j.category,
-        subtitle: j.origin,
-        description: j.description,
+      .map((b) => ({
+        id: b.id,
+        name: b.name,
+        image: imageFor(b),
+        badge: b.category,
+        subtitle: b.origin,
+        description: b.description,
         stats: [
-          { label: 'Max speed', value: j.max_speed },
-          { label: 'Range', value: j.range },
+          { label: 'Range', value: b.range },
+          { label: 'Payload', value: b.payload },
         ],
       }));
-  }, [data, jet]);
+  }, [data, bomber]);
 
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center pt-16">
         <div className="text-center">
           <div className="inline-block h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 border-primary" />
-          <p className="mt-4 text-muted-foreground">Loading aircraft...</p>
+          <p className="mt-4 text-muted-foreground">Loading bomber...</p>
         </div>
       </main>
     );
   }
 
-  if (error || !jet) {
+  if (error || !bomber) {
     return (
       <main className="mx-auto max-w-3xl px-5 pt-28">
         <div className="rounded-2xl border border-red-500/30 bg-red-900/20 p-4 text-red-300">
-          {error || `Aircraft "${id}" not found`}
+          {error || `Bomber "${id}" not found`}
         </div>
       </main>
     );
@@ -102,34 +102,34 @@ export default function FighterJetDetailPage() {
 
   return (
     <CatalogDetail
-      basePath="/fighter-jets"
-      backLabel="All aircraft"
-      kicker="Aircraft dossier"
-      relatedLabel="More aircraft"
+      basePath="/bombers"
+      backLabel="All bombers"
+      kicker="Bomber dossier"
+      relatedLabel="More bombers"
       related={related}
       data={{
-        id: jet.id,
-        name: jet.name,
-        images: jet.generatedImages?.length ? jet.generatedImages : [imageFor(jet)],
-        badge: jet.category,
-        metaLine: [jet.manufacturer, jet.origin].filter(Boolean).join(' · '),
-        description: jet.description,
+        id: bomber.id,
+        name: bomber.name,
+        images: bomber.generatedImages?.length ? bomber.generatedImages : [imageFor(bomber)],
+        badge: bomber.category,
+        metaLine: [bomber.manufacturer, bomber.origin].filter(Boolean).join(' · '),
+        description: bomber.description,
         stats: [
-          { label: 'Max speed', value: jet.max_speed },
-          { label: 'Range', value: jet.range },
-          { label: 'Service ceiling', value: jet.service_ceiling },
-          { label: 'Role', value: jet.role || jet.category },
+          { label: 'Max speed', value: bomber.max_speed },
+          { label: 'Range', value: bomber.range },
+          { label: 'Payload', value: bomber.payload },
+          { label: 'Service ceiling', value: bomber.service_ceiling },
         ],
-        details: buildDetailRows(jet, [
+        details: buildDetailRows(bomber, [
           'category',
           'origin',
           'manufacturer',
           'max_speed',
           'range',
+          'payload',
           'service_ceiling',
-          'role',
         ]),
-        specs: jet.specs ?? [],
+        specs: bomber.specs ?? [],
       }}
     />
   );

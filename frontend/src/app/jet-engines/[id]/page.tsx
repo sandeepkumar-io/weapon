@@ -1,27 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import JetEngineDetailCard from '@/components/JetEngineDetailCard';
+import { useEffect, useMemo, useState } from 'react';
+import { useParams } from 'next/navigation';
 import { getImageUrlForRifle } from '@/lib/imageGenerator';
-import { useParams, useRouter } from 'next/navigation';
+import CatalogDetail from '@/components/catalog/CatalogDetail';
+import type { CardItem } from '@/components/catalog/CatalogCard';
+import { buildDetailRows } from '@/components/catalog/detailUtils';
 
 interface Spec {
   label: string;
   value: string;
-  icon?: string;
-  unit?: string;
-}
-
-interface RelatedEngine {
-  _id: string;
-  id: string;
-  name: string;
-  manufacturer: string;
-  type: string;
-  thrust?: string;
-  usedIn?: string;
-  status?: string;
-  imageUrl?: string;
 }
 
 interface JetEngine {
@@ -30,155 +18,107 @@ interface JetEngine {
   name: string;
   manufacturer: string;
   origin: string;
-  type: string;
-  description: string;
   thrust?: string;
-  thrust_with_afterburner?: string;
-  maxThrustWithAB?: string;
-  used_in?: string;
-  usedIn?: string;
-  bypass_ratio?: string;
-  pressure_ratio?: string;
-  mass_flow?: string;
-  dry_weight?: string;
-  length?: string;
-  diameter?: string;
-  specs?: Spec[];
+  type?: string;
+  description: string;
+  generatedImages?: string[];
+  specs: Spec[];
+  [key: string]: unknown;
 }
+
+const imageFor = (e: JetEngine) => e.generatedImages?.[0] || getImageUrlForRifle(e.name);
 
 export default function JetEngineDetailPage() {
   const params = useParams();
-  const router = useRouter();
-  // Decode URL parameter to handle spaces and special characters
-  const engineId = decodeURIComponent(params.id as string);
+  const id = decodeURIComponent(params.id as string);
 
-  const [engine, setEngine] = useState<JetEngine | null>(null);
-  const [relatedEngines, setRelatedEngines] = useState<RelatedEngine[]>([]);
+  const [data, setData] = useState<JetEngine[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchEngineDetails();
-  }, [engineId]);
-
-  const fetchEngineDetails = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch('/api/jet-engines');
-      const result = await response.json();
-
-      if (result.success) {
-        const engines = result.data;
-        // Find engine by ID (case-insensitive and trim whitespace)
-        const current = engines.find((e: JetEngine) =>
-          e.id?.trim?.().toLowerCase?.() === engineId?.trim?.().toLowerCase?.()
-        );
-
-        if (current) {
-          setEngine(current);
-          // Get related engines (all except current)
-          const related = engines
-            .filter((e: JetEngine) => e._id !== current._id)
-            .slice(0, 3)
-            .map((e: JetEngine) => ({
-              _id: e._id, // Add unique MongoDB ID
-              id: e.id,
-              name: e.name,
-              manufacturer: e.manufacturer,
-              type: e.type || 'Turbofan',
-              thrust: e.thrust,
-              usedIn: (e as any).used_in || e.usedIn || 'Unknown',
-              status: 'Active',
-              imageUrl: (e as any).generatedImages?.[0] || getImageUrlForRifle(e.name),
-            }));
-
-          setRelatedEngines(related);
-        } else {
-          setError(`Engine with ID "${engineId}" not found. Available IDs: ${engines.slice(0, 5).map((e: JetEngine) => e.id).join(', ')}`);
-        }
-      } else {
-        setError('Failed to fetch engine data');
+    (async () => {
+      try {
+        setLoading(true);
+        const res = await fetch('/api/jet-engines');
+        const result = await res.json();
+        if (result.success) setData(result.data);
+        else setError('Failed to fetch engine data');
+      } catch (err) {
+        setError('Error: ' + (err as Error).message);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      setError('Error fetching engine details: ' + (err as Error).message);
-    } finally {
-      setLoading(false);
-    }
-  };
+    })();
+  }, []);
+
+  const engine = useMemo(
+    () => data.find((e) => e.id?.trim?.().toLowerCase?.() === id?.trim?.().toLowerCase?.()),
+    [data, id],
+  );
+
+  const related: CardItem[] = useMemo(() => {
+    if (!engine) return [];
+    return data
+      .filter((e) => e.id !== engine.id)
+      .slice(0, 8)
+      .map((e) => ({
+        id: e.id,
+        name: e.name,
+        image: imageFor(e),
+        badge: e.type,
+        subtitle: e.manufacturer,
+        description: e.description,
+        stats: [
+          { label: 'Thrust', value: e.thrust },
+          { label: 'Origin', value: e.origin },
+        ],
+      }));
+  }, [data, engine]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center" style={{
-        background: 'linear-gradient(to bottom, #0b2a5c, #061831)'
-      }}>
+      <main className="flex min-h-screen items-center justify-center pt-16">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-          <p className="text-white mt-4">Loading engine details...</p>
+          <div className="inline-block h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 border-primary" />
+          <p className="mt-4 text-muted-foreground">Loading engine...</p>
         </div>
-      </div>
+      </main>
     );
   }
 
   if (error || !engine) {
     return (
-      <div className="min-h-screen bg-slate-950" style={{
-        background: 'linear-gradient(to bottom, #0b2a5c, #061831)'
-      }}>
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-20">
-          <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-4 text-red-300">
-            {error || 'Engine not found'}
-          </div>
-          <button
-            onClick={() => router.back()}
-            className="mt-6 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded transition-colors"
-          >
-            Go Back
-          </button>
+      <main className="mx-auto max-w-3xl px-5 pt-28">
+        <div className="rounded-2xl border border-red-500/30 bg-red-900/20 p-4 text-red-300">
+          {error || `Engine "${id}" not found`}
         </div>
-      </div>
+      </main>
     );
   }
 
-  // Format thrust values
-  const maxThrustWithAB = engine.maxThrustWithAB || engine.thrust_with_afterburner || engine.thrust || '0 lbf';
-  const dryThrust = engine.thrust || '0 lbf';
-
-  // Build specs array from individual fields
-  const specsData: Spec[] = [];
-  if (engine.thrust) specsData.push({ label: 'Thrust', value: engine.thrust });
-  if (engine.bypass_ratio) specsData.push({ label: 'Bypass Ratio', value: engine.bypass_ratio });
-  if (engine.pressure_ratio) specsData.push({ label: 'Pressure Ratio', value: engine.pressure_ratio });
-  if (engine.mass_flow) specsData.push({ label: 'Mass Flow', value: engine.mass_flow });
-  if (engine.dry_weight) specsData.push({ label: 'Dry Weight', value: engine.dry_weight });
-  if (engine.length) specsData.push({ label: 'Length', value: engine.length });
-  if (engine.diameter) specsData.push({ label: 'Diameter', value: engine.diameter });
-
-  // Use existing specs array if available, otherwise use built specs
-  const specs = engine.specs && engine.specs.length > 0 ? engine.specs : specsData;
-
-  // Parse specs with default icons
-  const specsWithIcons: Spec[] = specs.map((spec: Spec, idx: number) => ({
-    ...spec,
-    icon: spec.icon || ['🔥', '🌬', '📊', '📈', '⚖', '📏'][idx % 6],
-  }));
-
   return (
-    <JetEngineDetailCard
-      id={engine.id}
-      name={engine.name}
-      manufacturer={engine.manufacturer}
-      origin={engine.origin}
-      type={engine.type}
-      description={engine.description}
-      maxThrustWithAB={maxThrustWithAB}
-      dryThrust={dryThrust}
-      usedIn={(engine as any).used_in || engine.usedIn}
-      specs={specsWithIcons}
-      imageUrl={(engine as any).imageUrl || getImageUrlForRifle(engine.name)}
-      generatedImages={(engine as any).generatedImages}
-      relatedEngines={relatedEngines}
-      onViewDatasheet={() => {
-        alert(`Datasheet for ${engine.name} would be downloaded here`);
+    <CatalogDetail
+      basePath="/jet-engines"
+      backLabel="All engines"
+      kicker="Engine dossier"
+      relatedLabel="More engines"
+      related={related}
+      data={{
+        id: engine.id,
+        name: engine.name,
+        images: engine.generatedImages?.length ? engine.generatedImages : [imageFor(engine)],
+        badge: engine.type,
+        metaLine: `${engine.manufacturer} · ${engine.origin}`,
+        description: engine.description,
+        stats: [
+          { label: 'Thrust', value: engine.thrust },
+          { label: 'Type', value: engine.type },
+          { label: 'Manufacturer', value: engine.manufacturer },
+          { label: 'Origin', value: engine.origin },
+        ],
+        details: buildDetailRows(engine, ['type', 'manufacturer', 'origin', 'thrust']),
+        specs: engine.specs ?? [],
       }}
     />
   );

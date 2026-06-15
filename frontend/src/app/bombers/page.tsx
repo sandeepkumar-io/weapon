@@ -11,39 +11,41 @@ interface Spec {
   value: string;
 }
 
-interface JetEngine {
+interface Bomber {
   _id: string;
   id: string;
   name: string;
-  manufacturer: string;
+  category: string;
   origin: string;
-  thrust?: string;
-  type?: string;
+  manufacturer?: string;
+  max_speed?: string;
+  range?: string;
+  payload?: string;
   description: string;
   specs: Spec[];
   generatedImages?: string[];
 }
 
-// 3D turbofan renders client-side only (WebGL); falls back to the gradient bg.
-const EngineScene = dynamic(() => import('@/components/hero/EngineScene'), { ssr: false });
+// 3D bomber renders client-side only (WebGL); falls back to procedural jet.
+const BomberScene = dynamic(() => import('@/components/hero/BomberScene'), { ssr: false });
 
 const PER_PAGE = 6;
 
-const toCard = (e: JetEngine): CardItem => ({
-  id: e.id,
-  name: e.name,
-  image: e.generatedImages?.[0] || getImageUrlForRifle(e.name),
-  badge: e.type,
-  subtitle: e.manufacturer,
-  description: e.description,
+const toCard = (b: Bomber): CardItem => ({
+  id: b.id,
+  name: b.name,
+  image: b.generatedImages?.[0] || getImageUrlForRifle(b.name),
+  badge: b.category,
+  subtitle: b.origin,
+  description: b.description,
   stats: [
-    { label: 'Thrust', value: e.thrust },
-    { label: 'Origin', value: e.origin },
+    { label: 'Range', value: b.range },
+    { label: 'Payload', value: b.payload },
   ],
 });
 
-export default function JetEnginesPage() {
-  const [data, setData] = useState<JetEngine[]>([]);
+export default function BombersPage() {
+  const [data, setData] = useState<Bomber[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [query, setQuery] = useState('');
@@ -54,7 +56,7 @@ export default function JetEnginesPage() {
     (async () => {
       try {
         setLoading(true);
-        const res = await fetch('/api/jet-engines');
+        const res = await fetch('/api/bombers');
         const result = await res.json();
         if (result.success) setData(result.data);
         else setError('Failed to fetch data');
@@ -73,12 +75,12 @@ export default function JetEnginesPage() {
 
   const filtered = useMemo(
     () =>
-      data.filter((engine) => {
+      data.filter((b) => {
         const searchable =
-          `${engine.name} ${engine.manufacturer} ${engine.type ?? ''} ${engine.description}`.toLowerCase();
+          `${b.name} ${b.category} ${b.origin} ${b.manufacturer ?? ''} ${b.description}`.toLowerCase();
         return (
           searchable.includes(query.toLowerCase()) &&
-          (origin === 'All origins' || engine.origin === origin)
+          (origin === 'All origins' || b.origin === origin)
         );
       }),
     [data, query, origin],
@@ -102,35 +104,35 @@ export default function JetEnginesPage() {
       <section className="relative overflow-hidden border-b border-border px-5 py-14 sm:py-20 lg:px-8">
         <div className="absolute inset-y-0 right-0 -z-10 w-2/3 bg-[radial-gradient(circle_at_center,var(--color-primary),transparent_68%)] opacity-10" />
 
-        {/* Live 3D turbofan — right-hand side */}
+        {/* Live 3D bomber — right-hand side */}
         <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-3/5 lg:block">
-          <EngineScene />
+          <BomberScene />
         </div>
 
         <div className="relative z-10 mx-auto max-w-7xl">
           <div className="mb-12 max-w-3xl">
             <p className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">
-              <LuSparkles className="h-4 w-4" /> Propulsion archive / 01
+              <LuSparkles className="h-4 w-4" /> Strategic strike archive / 01
             </p>
             <h1 className="font-display text-6xl font-bold uppercase leading-[0.82] tracking-tight sm:text-8xl lg:text-9xl">
-              Power behind
+              Carriers of
               <br />
-              <span className="text-primary">the impossible.</span>
+              <span className="text-primary">the storm.</span>
             </h1>
             <p className="mt-7 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
-              Explore the engineering landmarks that pushed aircraft faster, higher, and further —
-              from early turbojets to advanced variable-cycle propulsion.
+              Explore the bombers that project power across continents — from heavy strategic
+              platforms to stealth flying wings and supersonic strike aircraft.
             </p>
           </div>
           <div className="technical-panel grid max-w-3xl gap-3 rounded-2xl border border-border p-3 sm:grid-cols-[minmax(0,1fr)_240px]">
             <label className="relative block">
-              <span className="sr-only">Search engines</span>
+              <span className="sr-only">Search bombers</span>
               <LuSearch className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <input
                 value={query}
                 onChange={(e) => updateQuery(e.target.value)}
                 className="h-12 w-full rounded-xl border border-border bg-background/70 pl-11 pr-4 text-sm outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
-                placeholder="Search engine, maker or type..."
+                placeholder="Search bomber, type or origin..."
               />
             </label>
             <label>
@@ -155,7 +157,7 @@ export default function JetEnginesPage() {
         <div className="mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4">
           <div className="min-w-0">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Technical index</p>
-            <h2 className="mt-2 truncate font-display text-4xl font-bold uppercase sm:text-5xl">Engine catalog</h2>
+            <h2 className="mt-2 truncate font-display text-4xl font-bold uppercase sm:text-5xl">Bomber catalog</h2>
           </div>
           <p className="shrink-0 text-xs text-muted-foreground">
             <strong className="text-foreground">{filtered.length}</strong> records
@@ -166,22 +168,22 @@ export default function JetEnginesPage() {
           <div className="flex min-h-96 items-center justify-center">
             <div className="text-center">
               <div className="inline-block h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 border-primary" />
-              <p className="mt-4 text-muted-foreground">Loading jet engines...</p>
+              <p className="mt-4 text-muted-foreground">Loading bombers...</p>
             </div>
           </div>
         ) : error ? (
           <div className="rounded-2xl border border-red-500/30 bg-red-900/20 p-4 text-red-300">{error}</div>
         ) : visible.length ? (
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {visible.map((engine, index) => (
-              <CatalogCard key={engine._id} item={toCard(engine)} basePath="/jet-engines" index={index} />
+            {visible.map((b, index) => (
+              <CatalogCard key={b._id} item={toCard(b)} basePath="/bombers" index={index} />
             ))}
           </div>
         ) : (
           <div className="rounded-2xl border border-dashed border-border py-20 text-center">
             <LuSearch className="mx-auto mb-4 text-muted-foreground" />
-            <h3 className="font-display text-2xl uppercase">No engines found</h3>
-            <p className="mt-2 text-sm text-muted-foreground">Try another name, maker, or origin.</p>
+            <h3 className="font-display text-2xl uppercase">No bombers found</h3>
+            <p className="mt-2 text-sm text-muted-foreground">Try another name, type, or origin.</p>
           </div>
         )}
 

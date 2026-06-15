@@ -12,30 +12,29 @@ interface Spec {
   value: string;
 }
 
-interface FighterJet {
+interface Missile {
   _id: string;
   id: string;
   name: string;
   category: string;
   origin: string;
   manufacturer?: string;
+  guidance?: string;
   max_speed?: string;
   range?: string;
-  service_ceiling?: string;
-  role?: string;
   description: string;
   generatedImages?: string[];
   specs: Spec[];
   [key: string]: unknown;
 }
 
-const imageFor = (j: FighterJet) => j.generatedImages?.[0] || getImageUrlForRifle(j.name);
+const imageFor = (m: Missile) => m.generatedImages?.[0] || getImageUrlForRifle(m.name);
 
-export default function FighterJetDetailPage() {
+export default function MissileDetailPage() {
   const params = useParams();
   const id = decodeURIComponent(params.id as string);
 
-  const [data, setData] = useState<FighterJet[]>([]);
+  const [data, setData] = useState<Missile[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -43,10 +42,10 @@ export default function FighterJetDetailPage() {
     (async () => {
       try {
         setLoading(true);
-        const res = await fetch('/api/fighter-jets');
+        const res = await fetch('/api/air-to-air-missiles');
         const result = await res.json();
         if (result.success) setData(result.data);
-        else setError('Failed to fetch jet data');
+        else setError('Failed to fetch missile data');
       } catch (err) {
         setError('Error: ' + (err as Error).message);
       } finally {
@@ -55,46 +54,46 @@ export default function FighterJetDetailPage() {
     })();
   }, []);
 
-  const jet = useMemo(
-    () => data.find((j) => j.id?.trim?.().toLowerCase?.() === id?.trim?.().toLowerCase?.()),
+  const missile = useMemo(
+    () => data.find((m) => m.id?.trim?.().toLowerCase?.() === id?.trim?.().toLowerCase?.()),
     [data, id],
   );
 
   const related: CardItem[] = useMemo(() => {
-    if (!jet) return [];
+    if (!missile) return [];
     return data
-      .filter((j) => j.id !== jet.id)
+      .filter((m) => m.id !== missile.id)
       .slice(0, 8)
-      .map((j) => ({
-        id: j.id,
-        name: j.name,
-        image: imageFor(j),
-        badge: j.category,
-        subtitle: j.origin,
-        description: j.description,
+      .map((m) => ({
+        id: m.id,
+        name: m.name,
+        image: imageFor(m),
+        badge: m.category,
+        subtitle: m.origin,
+        description: m.description,
         stats: [
-          { label: 'Max speed', value: j.max_speed },
-          { label: 'Range', value: j.range },
+          { label: 'Range', value: m.range },
+          { label: 'Max speed', value: m.max_speed },
         ],
       }));
-  }, [data, jet]);
+  }, [data, missile]);
 
   if (loading) {
     return (
       <main className="flex min-h-screen items-center justify-center pt-16">
         <div className="text-center">
           <div className="inline-block h-12 w-12 animate-spin rounded-full border-b-2 border-t-2 border-primary" />
-          <p className="mt-4 text-muted-foreground">Loading aircraft...</p>
+          <p className="mt-4 text-muted-foreground">Loading missile...</p>
         </div>
       </main>
     );
   }
 
-  if (error || !jet) {
+  if (error || !missile) {
     return (
       <main className="mx-auto max-w-3xl px-5 pt-28">
         <div className="rounded-2xl border border-red-500/30 bg-red-900/20 p-4 text-red-300">
-          {error || `Aircraft "${id}" not found`}
+          {error || `Missile "${id}" not found`}
         </div>
       </main>
     );
@@ -102,34 +101,33 @@ export default function FighterJetDetailPage() {
 
   return (
     <CatalogDetail
-      basePath="/fighter-jets"
-      backLabel="All aircraft"
-      kicker="Aircraft dossier"
-      relatedLabel="More aircraft"
+      basePath="/air-to-air-missiles"
+      backLabel="All missiles"
+      kicker="Missile dossier"
+      relatedLabel="More missiles"
       related={related}
       data={{
-        id: jet.id,
-        name: jet.name,
-        images: jet.generatedImages?.length ? jet.generatedImages : [imageFor(jet)],
-        badge: jet.category,
-        metaLine: [jet.manufacturer, jet.origin].filter(Boolean).join(' · '),
-        description: jet.description,
+        id: missile.id,
+        name: missile.name,
+        images: missile.generatedImages?.length ? missile.generatedImages : [imageFor(missile)],
+        badge: missile.category,
+        metaLine: [missile.manufacturer, missile.origin].filter(Boolean).join(' · '),
+        description: missile.description,
         stats: [
-          { label: 'Max speed', value: jet.max_speed },
-          { label: 'Range', value: jet.range },
-          { label: 'Service ceiling', value: jet.service_ceiling },
-          { label: 'Role', value: jet.role || jet.category },
+          { label: 'Max speed', value: missile.max_speed },
+          { label: 'Range', value: missile.range },
+          { label: 'Guidance', value: missile.guidance },
+          { label: 'Origin', value: missile.origin },
         ],
-        details: buildDetailRows(jet, [
+        details: buildDetailRows(missile, [
           'category',
           'origin',
           'manufacturer',
           'max_speed',
           'range',
-          'service_ceiling',
-          'role',
+          'guidance',
         ]),
-        specs: jet.specs ?? [],
+        specs: missile.specs ?? [],
       }}
     />
   );

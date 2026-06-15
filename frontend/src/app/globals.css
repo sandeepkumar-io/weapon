@@ -1,10 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Oswald:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
+/* ============================================================
+   GLOBAL THEME — "HUD / Terminal" (matches the Footer).
+   Cyan + lime accents on a near-black surface. Defined once here
+   so every page and card inherits it through the design tokens.
+   ============================================================ */
 :root {
-  --background: #061831;
-  --foreground: #e6edf6;
-  --muted-foreground: #93a4c0;
-  --border: #1e3a5f;
+  --background: #050505;
+  --foreground: #e4e4e7;
+  --muted-foreground: #a1a1aa;
+  --border: #27272a;
 }
 
 @theme inline {
@@ -12,24 +18,55 @@
   --color-foreground: var(--foreground);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --color-muted: #0e2547;
-  --color-tactical-dark: #07172e;
-  --color-primary: #3b82f6;
-  --color-primary-foreground: #ffffff;
-  --color-card-gradient: #0c2348;
-  --font-display: var(--font-geist-sans);
-  --font-body: var(--font-geist-sans);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: #0f0f0f;
+  --color-tactical-dark: #050505;
+  --color-primary: #22d3ee;            /* cyan */
+  --color-primary-foreground: #050505;
+  --color-accent: #a3e635;             /* lime */
+  --color-accent-foreground: #050505;
+  --color-card-gradient: #0f0f0f;
+  --font-display: 'Oswald', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
-/* ============================================================
-   BLUE theme (matches the hero) + 1600px page width.
-   slate stays its default blue-gray and blue stays blue, so all
-   existing utility classes read correctly in the blue theme.
-   ============================================================ */
+/* ------------------------------------------------------------
+   Palette REMAP. The whole site was built on blue/sky (accents)
+   and slate/gray (surfaces). Re-point those Tailwind color tokens
+   to the HUD palette so existing `bg-slate-800`, `text-blue-300`,
+   etc. adopt the new theme without editing every component.
+   ------------------------------------------------------------ */
 @theme {
   --container-7xl: 100rem; /* widen max-w-7xl to 1600px */
+
+  /* Accents → cyan */
+  --color-blue-200: #a5f3fc;
+  --color-blue-300: #67e8f9;
+  --color-blue-400: #22d3ee;
+  --color-blue-500: #22d3ee;
+  --color-blue-600: #0891b2;
+  --color-blue-700: #0e7490;
+  --color-sky-200: #a5f3fc;
+  --color-sky-300: #67e8f9;
+  --color-sky-400: #22d3ee;
+  --color-sky-500: #06b6d4;
+
+  /* Surfaces → near-black HUD */
+  --color-slate-600: #3f3f46;
+  --color-slate-700: #27272a;
+  --color-slate-800: #0f0f0f;
+  --color-slate-900: #0a0a0a;
+  --color-slate-950: #050505;
+
+  /* Muted text → zinc */
+  --color-gray-300: #d4d4d8;
+  --color-gray-400: #a1a1aa;
+
+  /* Leftover light/orange bits → dark surface + lime accent */
+  --color-orange-50: #0f0f0f;
+  --color-orange-100: #1f2d10;
+  --color-orange-700: #a3e635;
 }
 
 /* Cap every `container` at 1600px and center it */
@@ -40,11 +77,25 @@
 
 body {
   background:
-    radial-gradient(120% 90% at 50% 0%, #133a78 0%, #0b2a5c 45%, #061831 100%) no-repeat fixed,
-    #061831;
+    radial-gradient(120% 80% at 15% 0%, rgba(34, 211, 238, 0.10), transparent 60%) no-repeat fixed,
+    radial-gradient(120% 80% at 85% 100%, rgba(163, 230, 53, 0.07), transparent 60%) no-repeat fixed,
+    linear-gradient(rgba(34, 211, 238, 0.03) 1px, transparent 1px) fixed,
+    linear-gradient(90deg, rgba(34, 211, 238, 0.03) 1px, transparent 1px) fixed,
+    #050505;
+  background-size: auto, auto, 60px 60px, 60px 60px, auto;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', var(--font-body), Arial, sans-serif;
   min-height: 100vh;
+}
+
+/* HUD card surface + image overlay (used by the catalog pages) */
+.technical-panel {
+  background: linear-gradient(160deg, #0f0f0f 0%, #0a0a0a 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.image-shade {
+  background: linear-gradient(to top, rgba(5, 5, 5, 0.96) 0%, rgba(5, 5, 5, 0.45) 45%, transparent 100%);
 }
 
 .hide-header .text-center {
