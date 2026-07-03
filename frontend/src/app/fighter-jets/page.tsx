@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import dynamic from 'next/dynamic';
-import { LuArrowLeft, LuArrowRight, LuSearch, LuSparkles } from 'react-icons/lu';
+import { LuSearch, LuSparkles } from 'react-icons/lu';
 import { getImageUrlForRifle } from '@/lib/imageGenerator';
 import CatalogCard, { type CardItem } from '@/components/catalog/CatalogCard';
+import CatalogPagination from '@/components/catalog/CatalogPagination';
 
 interface Spec {
   label: string;
@@ -23,9 +23,6 @@ interface FighterJet {
   specs: Spec[];
   generatedImages?: string[];
 }
-
-// SR-71 Blackbird (GLB) renders client-side only; falls back to procedural jet.
-const BlackbirdScene = dynamic(() => import('@/components/hero/BlackbirdScene'), { ssr: false });
 
 const PER_PAGE = 6;
 
@@ -98,31 +95,33 @@ export default function FighterJetsPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden pt-16">
-      {/* Hero + search */}
-      <section className="relative overflow-hidden border-b border-border px-5 py-14 sm:py-20 lg:px-8">
-        <div className="absolute inset-y-0 right-0 -z-10 w-2/3 bg-[radial-gradient(circle_at_center,var(--color-primary),transparent_68%)] opacity-10" />
+      <section className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden border-b border-border px-5 py-14 sm:py-20 lg:px-8">
+        <img
+          src="/fighterjet.jpg"
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover bg-black/35"
+        />
+        <div className="absolute inset-0 z-0 bg-linear-to-r from-[#050505] via-[#050505]/28 to-[#050505]/10" />
+        <div className="absolute inset-0 z-0 bg-linear-to-b from-[#050505]/15 via-transparent to-[#050505]/50" />
+       
 
-        {/* SR-71 Blackbird 3D model — right-hand side */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-3/5 lg:block">
-          <BlackbirdScene />
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-7xl">
-          <div className="mb-12 max-w-3xl">
+        <div className="relative z-10 w-full max-w-[760px] text-left">
+          <div className="mb-12">
             <p className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">
               <LuSparkles className="h-4 w-4" /> Air superiority archive / 01
             </p>
             <h1 className="font-display text-6xl font-bold uppercase leading-[0.82] tracking-tight sm:text-8xl lg:text-9xl">
-              Rulers of
+              Edge of
               <br />
-              <span className="text-primary">the sky.</span>
+              <span className="text-primary">air power.</span>
             </h1>
             <p className="mt-7 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
-              Explore the combat aircraft that command the skies — from supersonic interceptors to
-              fifth-generation stealth multirole fighters.
+              Compare the fighters built for speed, survivability, and control of the air, from
+              agile interceptors to stealth multirole aircraft.
             </p>
           </div>
-          <div className="technical-panel grid max-w-3xl gap-3 rounded-2xl border border-border p-3 sm:grid-cols-[minmax(0,1fr)_240px]">
+          <div className="technical-panel grid gap-3 rounded-lg border border-border p-3 sm:grid-cols-[minmax(0,1fr)_240px]">
             <label className="relative block">
               <span className="sr-only">Search fighter jets</span>
               <LuSearch className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -149,10 +148,6 @@ export default function FighterJetsPage() {
           </div>
         </div>
 
-        {/* CC-BY attribution for the 3D model */}
-        <p className="pointer-events-none absolute bottom-2 right-3 z-10 hidden text-[10px] uppercase tracking-wider text-zinc-600 lg:block">
-          3D model: Jet by jeremy · CC-BY · Poly Pizza
-        </p>
       </section>
 
       {/* Catalog */}
@@ -175,7 +170,7 @@ export default function FighterJetsPage() {
             </div>
           </div>
         ) : error ? (
-          <div className="rounded-2xl border border-red-500/30 bg-red-900/20 p-4 text-red-300">{error}</div>
+          <div className="rounded-lg border border-red-500/30 bg-red-900/20 p-4 text-red-300">{error}</div>
         ) : visible.length ? (
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {visible.map((jet, index) => (
@@ -183,59 +178,17 @@ export default function FighterJetsPage() {
             ))}
           </div>
         ) : (
-          <div className="rounded-2xl border border-dashed border-border py-20 text-center">
+          <div className="rounded-lg border border-dashed border-border py-20 text-center">
             <LuSearch className="mx-auto mb-4 text-muted-foreground" />
             <h3 className="font-display text-2xl uppercase">No fighter jets found</h3>
             <p className="mt-2 text-sm text-muted-foreground">Try another name, role, or origin.</p>
           </div>
         )}
 
-        {/* Pagination */}
         {!loading && !error && filtered.length > 0 && (
-          <nav className="mt-12 flex items-center justify-center gap-2" aria-label="Pagination">
-            <PageButton disabled={page === 1} onClick={() => setPage(page - 1)} ariaLabel="Previous page">
-              <LuArrowLeft />
-            </PageButton>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-              <PageButton key={number} active={number === page} onClick={() => setPage(number)} ariaLabel={`Page ${number}`}>
-                {number}
-              </PageButton>
-            ))}
-            <PageButton disabled={page === totalPages} onClick={() => setPage(page + 1)} ariaLabel="Next page">
-              <LuArrowRight />
-            </PageButton>
-          </nav>
+          <CatalogPagination page={page} totalPages={totalPages} onPageChange={setPage} />
         )}
       </section>
     </main>
-  );
-}
-
-function PageButton({
-  children,
-  onClick,
-  active,
-  disabled,
-  ariaLabel,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  active?: boolean;
-  disabled?: boolean;
-  ariaLabel: string;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      aria-label={ariaLabel}
-      className={`grid h-10 w-10 place-items-center rounded-lg border text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-40 ${
-        active
-          ? 'border-primary bg-primary text-[#050505]'
-          : 'border-border text-foreground hover:border-primary hover:text-primary'
-      }`}
-    >
-      {children}
-    </button>
   );
 }

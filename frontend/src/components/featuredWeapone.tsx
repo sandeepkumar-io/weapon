@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { LuArrowRight } from "react-icons/lu";
 
 interface FeaturedItem {
   id: string;
@@ -56,47 +57,48 @@ const FeaturedWeapons = ({ hideHeader }: { hideHeader?: boolean }) => {
   }, []);
 
   return (
-    <section className="py-20 bg-background">
-      <div className="container mx-auto px-4">
+    <section id="featured" className="border-t border-border bg-background py-16 lg:py-20">
+      <div className="container mx-auto px-5 lg:px-8">
         {!hideHeader && (
-          <div className="text-center mb-12">
-            <span className="text-xs tracking-[0.3em] text-primary uppercase">Handpicked</span>
-            <h2 className="font-display text-4xl md:text-5xl text-foreground mt-2">
-              FEATURED <span className="text-primary">WEAPONS</span>
-            </h2>
-            <div className="w-20 h-0.5 bg-primary/50 mx-auto mt-4" />
+          <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <span className="font-mono text-[11px] uppercase tracking-[0.28em] text-primary">Handpicked</span>
+              <h2 className="mt-3 font-display text-4xl font-bold uppercase text-foreground md:text-5xl">
+                Reference cards
+              </h2>
+            </div>
+            <p className="max-w-lg text-sm leading-7 text-muted-foreground">
+              A fast sample of image-led entries with the same visual treatment used across the catalog pages.
+            </p>
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
           {loading
             ? Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="h-72 rounded-lg border border-border bg-white/5 animate-pulse" />
+                <div key={i} className="h-80 rounded-lg border border-border bg-white/5 animate-pulse" />
               ))
             : items.map((item) => (
-                <Link key={`${item.tag}-${item.id}`} href={item.href}>
-                  <div className="group relative overflow-hidden rounded-lg border border-border bg-background cursor-pointer transition-colors hover:border-primary/50">
-                    <div className="relative h-56 overflow-hidden">
+                <Link key={`${item.tag}-${item.id}`} href={item.href} className="group block">
+                  <div className="technical-panel relative min-h-full overflow-hidden rounded-lg border border-border transition duration-300 hover:-translate-y-1 hover:border-primary/60">
+                    <div className="relative aspect-16/10 overflow-hidden bg-[#0a0a0a]">
                       {item.image && (
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                       )}
-                      <div
-                        className="absolute inset-0"
-                        style={{ background: "linear-gradient(to top, rgba(0,0,0,0.92), transparent 70%)" }}
-                      />
-                      <span className="absolute top-3 left-3 text-[10px] uppercase tracking-widest bg-primary/20 border border-primary/40 text-primary px-2 py-1 rounded">
+                      <div className="image-shade absolute inset-0" />
+                      <span className="absolute left-4 top-4 rounded-md border border-primary/40 bg-black/65 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-primary backdrop-blur">
                         {item.tag}
                       </span>
                     </div>
-                    <div className="p-4">
-                      <h3 className="font-display text-lg text-foreground line-clamp-1">{item.name}</h3>
-                      <div className="mt-2 flex items-center gap-1 text-xs text-primary font-semibold uppercase tracking-wider">
-                        View details
-                        <span className="transition-transform group-hover:translate-x-1">-&gt;</span>
+                    <div className="p-5">
+                      <h3 className="line-clamp-1 font-display text-xl font-bold uppercase text-foreground">{item.name}</h3>
+                      <div className="mt-5 flex items-center justify-between border-t border-border pt-4 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                        <span>Show more</span>
+                        <LuArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                       </div>
                     </div>
                   </div>

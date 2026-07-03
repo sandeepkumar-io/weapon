@@ -90,7 +90,7 @@ export default function JetEngineDetailPage() {
   if (error || !engine) {
     return (
       <main className="mx-auto max-w-3xl px-5 pt-28">
-        <div className="rounded-2xl border border-red-500/30 bg-red-900/20 p-4 text-red-300">
+        <div className="rounded-lg border border-red-500/30 bg-red-900/20 p-4 text-red-300">
           {error || `Engine "${id}" not found`}
         </div>
       </main>

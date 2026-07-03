@@ -105,3 +105,12 @@ body {
 .hero-overlay {
   background: transparent;
 }
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.09) 1px, transparent 1px),
+    linear-gradient(115deg, transparent 0 48%, rgba(163, 230, 53, 0.08) 49%, transparent 50% 100%);
+  background-size: 72px 72px, 72px 72px, 180px 180px;
+  mask-image: linear-gradient(to bottom, black 0%, black 70%, transparent 100%);
+}

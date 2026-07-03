@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { LuChevronRight } from 'react-icons/lu';
+import { LuArrowRight } from 'react-icons/lu';
 import { getFallbackImageUrl } from '@/lib/imageGenerator';
 
 export interface CardItem {
@@ -27,7 +27,7 @@ export default function CatalogCard({
   return (
     <Link
       href={`${basePath}/${encodeURIComponent(item.id)}`}
-      className="technical-panel group block cursor-pointer overflow-hidden rounded-2xl border border-border transition duration-300 hover:-translate-y-1 hover:border-primary/60"
+      className="technical-panel group block cursor-pointer overflow-hidden rounded-lg border border-border transition duration-300 hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_24px_70px_-38px_rgba(34,211,238,0.65)]"
     >
       <div className="relative aspect-16/10 overflow-hidden">
         <img
@@ -41,7 +41,7 @@ export default function CatalogCard({
         />
         <div className="image-shade absolute inset-0" />
         {item.badge && (
-          <span className="absolute left-4 top-4 rounded-full border border-primary/30 bg-background/80 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-primary backdrop-blur">
+          <span className="absolute left-4 top-4 rounded-md border border-primary/30 bg-background/80 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-primary backdrop-blur">
             {item.badge}
           </span>
         )}
@@ -54,7 +54,7 @@ export default function CatalogCard({
         {item.description && (
           <p className="line-clamp-2 min-h-12 text-sm leading-6 text-muted-foreground">{item.description}</p>
         )}
-        <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-border bg-border">
+        <div className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-border bg-border">
           {item.stats.slice(0, 2).map((s) => (
             <div key={s.label} className="bg-[#0f0f0f] p-3">
               <span className="block text-[9px] uppercase tracking-widest text-muted-foreground">{s.label}</span>
@@ -62,9 +62,9 @@ export default function CatalogCard({
             </div>
           ))}
         </div>
-        <div className="mt-5 flex items-center justify-between border-t border-border pt-4 text-xs font-bold uppercase tracking-wider text-primary">
-          <span>Open dossier</span>
-          <LuChevronRight className="h-4 w-4 transition group-hover:translate-x-1" />
+        <div className="mt-5 flex items-center justify-between border-t border-border pt-4 text-xs font-bold uppercase tracking-[0.18em] text-primary">
+          <span>Show more</span>
+          <LuArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </div>
       </div>
     </Link>

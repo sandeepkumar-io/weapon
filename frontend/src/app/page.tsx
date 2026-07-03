@@ -19,10 +19,8 @@ function page() {
   return (
     <div className='w-full min-h-screen'>
       <HeroSection />
-      <section className='container mx-auto mt-6 '>
-        <CategoriesSection />
-      </section>
-      <section className='container mx-auto px-4 mb-16 '>
+      <CategoriesSection />
+      <section className='container mx-auto px-5 pb-16 lg:px-8'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
           {navCategories.map((category) => (
             <CategoryLinkCard key={category.href} category={category} />

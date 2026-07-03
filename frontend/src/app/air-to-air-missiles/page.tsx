@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { LuArrowLeft, LuArrowRight, LuSearch, LuSparkles } from 'react-icons/lu';
+import { LuSearch, LuSparkles } from 'react-icons/lu';
 import { getImageUrlForRifle } from '@/lib/imageGenerator';
 import CatalogCard, { type CardItem } from '@/components/catalog/CatalogCard';
+import CatalogPagination from '@/components/catalog/CatalogPagination';
 
 interface Spec {
   label: string;
@@ -124,7 +125,7 @@ export default function AirToAirMissilesPage() {
               seekers to long-range beyond-visual-range interceptors.
             </p>
           </div>
-          <div className="technical-panel grid max-w-3xl gap-3 rounded-2xl border border-border p-3 sm:grid-cols-[minmax(0,1fr)_240px]">
+          <div className="technical-panel grid max-w-3xl gap-3 rounded-lg border border-border p-3 sm:grid-cols-[minmax(0,1fr)_240px]">
             <label className="relative block">
               <span className="sr-only">Search missiles</span>
               <LuSearch className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -172,7 +173,7 @@ export default function AirToAirMissilesPage() {
             </div>
           </div>
         ) : error ? (
-          <div className="rounded-2xl border border-red-500/30 bg-red-900/20 p-4 text-red-300">{error}</div>
+          <div className="rounded-lg border border-red-500/30 bg-red-900/20 p-4 text-red-300">{error}</div>
         ) : visible.length ? (
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {visible.map((m, index) => (
@@ -180,59 +181,17 @@ export default function AirToAirMissilesPage() {
             ))}
           </div>
         ) : (
-          <div className="rounded-2xl border border-dashed border-border py-20 text-center">
+          <div className="rounded-lg border border-dashed border-border py-20 text-center">
             <LuSearch className="mx-auto mb-4 text-muted-foreground" />
             <h3 className="font-display text-2xl uppercase">No missiles found</h3>
             <p className="mt-2 text-sm text-muted-foreground">Try another name, type, or origin.</p>
           </div>
         )}
 
-        {/* Pagination */}
         {!loading && !error && filtered.length > 0 && (
-          <nav className="mt-12 flex items-center justify-center gap-2" aria-label="Pagination">
-            <PageButton disabled={page === 1} onClick={() => setPage(page - 1)} ariaLabel="Previous page">
-              <LuArrowLeft />
-            </PageButton>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-              <PageButton key={number} active={number === page} onClick={() => setPage(number)} ariaLabel={`Page ${number}`}>
-                {number}
-              </PageButton>
-            ))}
-            <PageButton disabled={page === totalPages} onClick={() => setPage(page + 1)} ariaLabel="Next page">
-              <LuArrowRight />
-            </PageButton>
-          </nav>
+          <CatalogPagination page={page} totalPages={totalPages} onPageChange={setPage} />
         )}
       </section>
     </main>
-  );
-}
-
-function PageButton({
-  children,
-  onClick,
-  active,
-  disabled,
-  ariaLabel,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  active?: boolean;
-  disabled?: boolean;
-  ariaLabel: string;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      aria-label={ariaLabel}
-      className={`grid h-10 w-10 place-items-center rounded-lg border text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-40 ${
-        active
-          ? 'border-primary bg-primary text-[#050505]'
-          : 'border-border text-foreground hover:border-primary hover:text-primary'
-      }`}
-    >
-      {children}
-    </button>
   );
 }

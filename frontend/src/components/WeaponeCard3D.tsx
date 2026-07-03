@@ -1,5 +1,15 @@
-import { Weapon } from "@/lib/weapons";
 import Link from "next/link";
+
+interface Weapon {
+  id: string;
+  name: string;
+  origin: string;
+  description: string;
+  caliber?: string;
+  range?: string;
+  speed?: string;
+  specs: { label: string; value: string }[];
+}
 
 interface WeaponCard3DProps {
   weapon: Weapon;

@@ -67,7 +67,7 @@ export default function CatalogDetail({
             {data.stats.map((s, i) => {
               const Icon = ICONS[i % ICONS.length];
               return (
-                <div key={s.label} className="rounded-2xl border border-border bg-background/50 p-4">
+                <div key={s.label} className="rounded-lg border border-border bg-background/50 p-4">
                   <span className="mb-4 block text-primary">
                     <Icon className="h-4 w-4" />
                   </span>
@@ -90,7 +90,7 @@ export default function CatalogDetail({
           {data.details && data.details.length > 0 && (
             <div className="mt-10">
               <h2 className="font-display text-2xl font-bold uppercase">Details</h2>
-              <div className="mt-4 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-4 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
                 {data.details.map((row) => (
                   <div key={row.label} className="flex items-center justify-between gap-3 bg-[#0f0f0f] px-4 py-3 text-sm">
                     <span className="text-muted-foreground">{row.label}</span>
@@ -105,7 +105,7 @@ export default function CatalogDetail({
           {data.specs?.length > 0 && (
             <div className="mt-10">
               <h2 className="font-display text-2xl font-bold uppercase">Specifications</h2>
-              <div className="mt-4 grid gap-px overflow-hidden rounded-2xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-4 grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
                 {data.specs.map((spec) => (
                   <div key={spec.label} className="flex items-center justify-between bg-[#0f0f0f] px-4 py-3 text-sm">
                     <span className="text-muted-foreground">{spec.label}</span>

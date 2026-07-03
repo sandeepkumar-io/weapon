@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import dynamic from 'next/dynamic';
-import { LuArrowLeft, LuArrowRight, LuSearch, LuSparkles } from 'react-icons/lu';
+import { LuSearch, LuSparkles } from 'react-icons/lu';
 import { getImageUrlForRifle } from '@/lib/imageGenerator';
 import CatalogCard, { type CardItem } from '@/components/catalog/CatalogCard';
+import CatalogPagination from '@/components/catalog/CatalogPagination';
 
 interface Spec {
   label: string;
@@ -25,9 +25,6 @@ interface Bomber {
   specs: Spec[];
   generatedImages?: string[];
 }
-
-// 3D bomber renders client-side only (WebGL); falls back to procedural jet.
-const BomberScene = dynamic(() => import('@/components/hero/BomberScene'), { ssr: false });
 
 const PER_PAGE = 6;
 
@@ -100,31 +97,32 @@ export default function BombersPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden pt-16">
-      {/* Hero + search */}
-      <section className="relative overflow-hidden border-b border-border px-5 py-14 sm:py-20 lg:px-8">
-        <div className="absolute inset-y-0 right-0 -z-10 w-2/3 bg-[radial-gradient(circle_at_center,var(--color-primary),transparent_68%)] opacity-10" />
+      <section className="relative flex min-h-[calc(100vh-4rem)] items-center overflow-hidden border-b border-border px-5 py-14 sm:py-20 lg:px-8">
+        <img
+          src="/BM_Lockheed-SR-71C-Blackbird_7_mod.jpg"
+          alt=""
+          aria-hidden
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center opacity-70"
+        />
+        <div className="absolute inset-0 z-0 bg-linear-to-r from-[#050505] via-[#050505]/36 to-[#050505]/10" />
+        <div className="absolute inset-0 z-0 bg-linear-to-b from-[#050505]/18 via-transparent to-[#050505]/62" />
 
-        {/* Live 3D bomber — right-hand side */}
-        <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-3/5 lg:block">
-          <BomberScene />
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-7xl">
-          <div className="mb-12 max-w-3xl">
+        <div className="relative z-10 w-full max-w-[760px] text-left">
+          <div className="mb-12">
             <p className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.22em] text-primary">
               <LuSparkles className="h-4 w-4" /> Strategic strike archive / 01
             </p>
             <h1 className="font-display text-6xl font-bold uppercase leading-[0.82] tracking-tight sm:text-8xl lg:text-9xl">
-              Carriers of
+              Long-range
               <br />
-              <span className="text-primary">the storm.</span>
+              <span className="text-primary">strike wings.</span>
             </h1>
             <p className="mt-7 max-w-xl text-sm leading-7 text-muted-foreground sm:text-base">
-              Explore the bombers that project power across continents — from heavy strategic
-              platforms to stealth flying wings and supersonic strike aircraft.
+              Explore aircraft built to project power across distance, from strategic bombers and
+              stealth wings to high-speed reconnaissance and strike platforms.
             </p>
           </div>
-          <div className="technical-panel grid max-w-3xl gap-3 rounded-2xl border border-border p-3 sm:grid-cols-[minmax(0,1fr)_240px]">
+          <div className="technical-panel grid gap-3 rounded-lg border border-border p-3 sm:grid-cols-[minmax(0,1fr)_240px]">
             <label className="relative block">
               <span className="sr-only">Search bombers</span>
               <LuSearch className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -172,7 +170,7 @@ export default function BombersPage() {
             </div>
           </div>
         ) : error ? (
-          <div className="rounded-2xl border border-red-500/30 bg-red-900/20 p-4 text-red-300">{error}</div>
+          <div className="rounded-lg border border-red-500/30 bg-red-900/20 p-4 text-red-300">{error}</div>
         ) : visible.length ? (
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {visible.map((b, index) => (
@@ -180,59 +178,17 @@ export default function BombersPage() {
             ))}
           </div>
         ) : (
-          <div className="rounded-2xl border border-dashed border-border py-20 text-center">
+          <div className="rounded-lg border border-dashed border-border py-20 text-center">
             <LuSearch className="mx-auto mb-4 text-muted-foreground" />
             <h3 className="font-display text-2xl uppercase">No bombers found</h3>
             <p className="mt-2 text-sm text-muted-foreground">Try another name, type, or origin.</p>
           </div>
         )}
 
-        {/* Pagination */}
         {!loading && !error && filtered.length > 0 && (
-          <nav className="mt-12 flex items-center justify-center gap-2" aria-label="Pagination">
-            <PageButton disabled={page === 1} onClick={() => setPage(page - 1)} ariaLabel="Previous page">
-              <LuArrowLeft />
-            </PageButton>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-              <PageButton key={number} active={number === page} onClick={() => setPage(number)} ariaLabel={`Page ${number}`}>
-                {number}
-              </PageButton>
-            ))}
-            <PageButton disabled={page === totalPages} onClick={() => setPage(page + 1)} ariaLabel="Next page">
-              <LuArrowRight />
-            </PageButton>
-          </nav>
+          <CatalogPagination page={page} totalPages={totalPages} onPageChange={setPage} />
         )}
       </section>
     </main>
-  );
-}
-
-function PageButton({
-  children,
-  onClick,
-  active,
-  disabled,
-  ariaLabel,
-}: {
-  children: React.ReactNode;
-  onClick: () => void;
-  active?: boolean;
-  disabled?: boolean;
-  ariaLabel: string;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      aria-label={ariaLabel}
-      className={`grid h-10 w-10 place-items-center rounded-lg border text-sm font-bold transition disabled:cursor-not-allowed disabled:opacity-40 ${
-        active
-          ? 'border-primary bg-primary text-[#050505]'
-          : 'border-border text-foreground hover:border-primary hover:text-primary'
-      }`}
-    >
-      {children}
-    </button>
   );
 }

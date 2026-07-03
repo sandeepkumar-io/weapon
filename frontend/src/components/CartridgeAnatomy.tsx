@@ -138,7 +138,7 @@ export default function CartridgeAnatomy({
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '-10%' }}
             transition={{ duration: 0.8, ease: EASE }}
-            className="relative overflow-hidden rounded-2xl border border-cyan-500/20 bg-[#0b0e16]"
+            className="relative overflow-hidden rounded-lg border border-cyan-500/20 bg-[#0b0e16]"
             style={{
               backgroundImage:
                 'linear-gradient(rgba(34,211,238,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(34,211,238,0.06) 1px, transparent 1px)',
