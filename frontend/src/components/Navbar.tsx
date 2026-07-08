@@ -9,7 +9,6 @@ import { FiMenu, FiX } from 'react-icons/fi';
 const links = [
   { href: '/', label: 'Home' },
   { href: '/fighter-jets', label: 'Jets' },
-  { href: '/airlines', label: 'Airlines' },
   { href: '/airplanes', label: 'Planes' },
   { href: '/jet-engines', label: 'Engines' },
   { href: '/rifles', label: 'Rifles' },
