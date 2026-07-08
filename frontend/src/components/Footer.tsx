@@ -14,6 +14,8 @@ import {
 
 const catalogLinks = [
   { label: 'Fighter Jets', href: '/fighter-jets' },
+  { label: 'Airlines', href: '/airlines' },
+  { label: 'Airplanes', href: '/airplanes' },
   { label: 'Jet Engines', href: '/jet-engines' },
   { label: 'Rifles', href: '/rifles' },
   { label: 'Sniper Rifles', href: '/sniper-rifles' },

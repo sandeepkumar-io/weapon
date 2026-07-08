@@ -9,6 +9,8 @@ import { FiMenu, FiX } from 'react-icons/fi';
 const links = [
   { href: '/', label: 'Home' },
   { href: '/fighter-jets', label: 'Jets' },
+  { href: '/airlines', label: 'Airlines' },
+  { href: '/airplanes', label: 'Planes' },
   { href: '/jet-engines', label: 'Engines' },
   { href: '/rifles', label: 'Rifles' },
   { href: '/sniper-rifles', label: 'Snipers' },
@@ -65,7 +67,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop links */}
-          <div className="hidden items-center gap-1 md:flex">
+          <div className="hidden items-center gap-1 lg:flex">
             {links.map((link) => {
               const active = isActive(pathname, link.href);
               return (
@@ -107,7 +109,7 @@ export default function Navbar() {
 
           {/* Mobile toggle */}
           <button
-            className="grid h-10 w-10 place-items-center text-foreground transition-colors hover:text-primary md:hidden"
+            className="grid h-10 w-10 place-items-center text-foreground transition-colors hover:text-primary lg:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle navigation"
             aria-expanded={open}
@@ -148,7 +150,7 @@ export default function Navbar() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.28, ease: 'easeInOut' }}
-            className="overflow-hidden border-t border-border bg-[#0a0a0a]/95 backdrop-blur-xl md:hidden"
+            className="overflow-hidden border-t border-border bg-[#0a0a0a]/95 backdrop-blur-xl lg:hidden"
           >
             <div className="container mx-auto px-4 py-3">
               {links.map((link, i) => {
