@@ -1,10 +1,5 @@
 export function getImageUrlForRifle(rifleName: string): string {
-  // Premium placeholder image with gradient and name
-  // Creates unique, high-quality placeholders for weapons without Wikipedia images
-
   const encodedName = encodeURIComponent(rifleName);
-
-  // Premium gradient colors for weapon cards
   const gradients = [
     'c0392b,e74c3c', // Red gradient
     '2c3e50,34495e', // Blue-gray gradient
@@ -20,7 +15,6 @@ export function getImageUrlForRifle(rifleName: string): string {
   const gradientIndex = hash % gradients.length;
   const gradient = gradients[gradientIndex];
 
-  // UI Avatars with premium styling
   return `https://ui-avatars.com/api/?name=${encodedName}&background=${gradient}&color=ffffff&size=800&font-size=0.35&bold=true&format=svg`;
 }
 
@@ -28,7 +22,5 @@ export function getFallbackImageUrl(rifleName: string): string {
   // High-quality fallback with Picsum (real photos) or premium placeholder
   const hash = rifleName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
 
-  // Use Picsum (nice photography) as fallback
-  // Falls back gracefully with color gradient if unavailable
   return `https://picsum.photos/800/600?random=${hash}`;
 }

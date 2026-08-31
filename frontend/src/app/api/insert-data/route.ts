@@ -18,14 +18,10 @@ export async function POST() {
     await Weapon.deleteMany({});
     await Category.deleteMany({});
 
-    // Drop old collections to clear any old data
-    try {
-      await FighterJet.collection.drop();
-      console.log('FighterJet collection dropped');
-    } catch (error) {
-      console.log('FighterJet collection does not exist yet');
-    }
+    // Fighter jets are seeded separately from public/aircraft_data by
+    // POST /api/fighter-jets/seed, so this route leaves that collection alone.
 
+    // Drop old collections to clear any old data
     try {
       await JetEngine.collection.drop();
       console.log('JetEngine collection dropped');
@@ -67,12 +63,6 @@ export async function POST() {
       });
     };
 
-    // Read fighter jet data from JSON file
-    const fighterJetPath = 'C:\\sandeep\\llm-data-generator\\data\\fighter_jet_data.json';
-    const fighterJetData = fs.readFileSync(fighterJetPath, 'utf-8');
-    let fighterJets = JSON.parse(fighterJetData);
-    fighterJets = cleanData(fighterJets);
-
     // Read jet engine data from JSON file
     const jetEnginePath = 'C:\\sandeep\\llm-data-generator\\data\\jet_engine_data.json';
     const jetEngineData = fs.readFileSync(jetEnginePath, 'utf-8');
@@ -97,10 +87,6 @@ export async function POST() {
     let sniperRifles = JSON.parse(sniperRifleData);
     sniperRifles = cleanData(sniperRifles);
 
-    // Insert fighter jets
-    const insertedFighterJets = await FighterJet.insertMany(fighterJets);
-    console.log(`Inserted ${insertedFighterJets.length} fighter jets`);
-
     // Insert jet engines
     const insertedJetEngines = await JetEngine.insertMany(jetEngines);
     console.log(`Inserted ${insertedJetEngines.length} jet engines`);
@@ -121,7 +107,6 @@ export async function POST() {
       {
         success: true,
         message: 'Data inserted successfully',
-        fighterJets: insertedFighterJets.length,
         jetEngines: insertedJetEngines.length,
         pistolBullets: insertedPistolBullets.length,
         rifles: insertedRifles.length,
