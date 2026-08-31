@@ -19,16 +19,10 @@ export async function POST() {
     await Category.deleteMany({});
 
     // Fighter jets are seeded separately from public/aircraft_data by
-    // POST /api/fighter-jets/seed, so this route leaves that collection alone.
+    // POST /api/fighter-jets/seed, and jet engines from public/engine_data by
+    // POST /api/jet-engines/seed, so this route leaves both collections alone.
 
     // Drop old collections to clear any old data
-    try {
-      await JetEngine.collection.drop();
-      console.log('JetEngine collection dropped');
-    } catch (error) {
-      console.log('JetEngine collection does not exist yet');
-    }
-
     try {
       await PistolBullet.collection.drop();
       console.log('PistolBullet collection dropped');
@@ -63,12 +57,6 @@ export async function POST() {
       });
     };
 
-    // Read jet engine data from JSON file
-    const jetEnginePath = 'C:\\sandeep\\llm-data-generator\\data\\jet_engine_data.json';
-    const jetEngineData = fs.readFileSync(jetEnginePath, 'utf-8');
-    let jetEngines = JSON.parse(jetEngineData);
-    jetEngines = cleanData(jetEngines);
-
     // Read pistol bullet data from JSON file
     const pistolBulletPath = 'C:\\sandeep\\llm-data-generator\\data\\pistol_bullet_data.json';
     const pistolBulletData = fs.readFileSync(pistolBulletPath, 'utf-8');
@@ -87,10 +75,6 @@ export async function POST() {
     let sniperRifles = JSON.parse(sniperRifleData);
     sniperRifles = cleanData(sniperRifles);
 
-    // Insert jet engines
-    const insertedJetEngines = await JetEngine.insertMany(jetEngines);
-    console.log(`Inserted ${insertedJetEngines.length} jet engines`);
-
     // Insert pistol bullets
     const insertedPistolBullets = await PistolBullet.insertMany(pistolBullets);
     console.log(`Inserted ${insertedPistolBullets.length} pistol bullets`);
@@ -107,7 +91,6 @@ export async function POST() {
       {
         success: true,
         message: 'Data inserted successfully',
-        jetEngines: insertedJetEngines.length,
         pistolBullets: insertedPistolBullets.length,
         rifles: insertedRifles.length,
         sniperRifles: insertedSniperRifles.length,

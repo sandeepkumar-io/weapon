@@ -1,6 +1,5 @@
 'use client';
 
-import type { ReactNode } from 'react';
 import Link from 'next/link';
 import {
   LuArrowLeft,
@@ -20,8 +19,15 @@ import {
   LuTarget,
 } from 'react-icons/lu';
 import HeroCarousel from './HeroCarousel';
+import {
+  ChipList,
+  ComponentGrid,
+  Section,
+  SpecGrid,
+  rows,
+  youTubeId,
+} from './DetailPrimitives';
 import AircraftCard from './AircraftCard';
-import { getFallbackImageUrl } from '@/lib/imageGenerator';
 import {
   aircraftImages,
   formatCost,
@@ -38,11 +44,6 @@ import {
   type AircraftListItem,
 } from '@/lib/aircraftFormat';
 
-type Row = { label: string; value: string | null };
-
-/** Drops rows with no value so sections never render half-empty grids. */
-const rows = (input: Row[]) => input.filter((row) => row.value);
-
 const WEAPON_CATEGORIES = [
   { key: 'airToAirMissiles', label: 'Air-to-air missiles' },
   { key: 'airToGroundMissiles', label: 'Air-to-ground missiles' },
@@ -52,117 +53,6 @@ const WEAPON_CATEGORIES = [
   { key: 'rockets', label: 'Rockets' },
   { key: 'otherWeapons', label: 'Other weapons' },
 ] as const;
-
-/** Pulls the YouTube id out of a watch, share or embed URL. */
-function youTubeId(url?: string): string | null {
-  if (!url) return null;
-  const match = url.match(/(?:v=|youtu\.be\/|\/embed\/)([A-Za-z0-9_-]{11})/);
-  return match ? match[1] : null;
-}
-
-function Section({
-  title,
-  icon: Icon,
-  children,
-}: {
-  title: string;
-  icon: (props: { className?: string }) => ReactNode;
-  children: ReactNode;
-}) {
-  return (
-    <section className="mt-12">
-      <div className="mb-4 flex items-center gap-3">
-        <Icon className="h-4 w-4 text-primary" />
-        <h2 className="font-display text-2xl font-bold uppercase">{title}</h2>
-        <span className="h-px flex-1 bg-border" />
-      </div>
-      {children}
-    </section>
-  );
-}
-
-function SpecGrid({ items }: { items: Row[] }) {
-  if (!items.length) return null;
-  return (
-    <div className="grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
-      {items.map((row) => (
-        <div
-          key={row.label}
-          className="flex items-start justify-between gap-3 bg-[#0f0f0f] px-4 py-3 text-sm"
-        >
-          <span className="shrink-0 text-muted-foreground">{row.label}</span>
-          <strong className="text-right text-foreground">{row.value}</strong>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-function ChipList({ items, tone = 'muted' }: { items?: string[]; tone?: 'muted' | 'primary' }) {
-  if (!items?.length) return null;
-  const style =
-    tone === 'primary'
-      ? 'border-primary/30 bg-primary/10 text-primary'
-      : 'border-border bg-[#0f0f0f] text-muted-foreground';
-
-  return (
-    <div className="flex flex-wrap gap-2">
-      {items.map((item) => (
-        <span
-          key={item}
-          className={`rounded-md border px-3 py-1.5 text-xs tracking-wide ${style}`}
-        >
-          {item}
-        </span>
-      ))}
-    </div>
-  );
-}
-
-/** Named components (weapons, variants) rendered as a labelled thumbnail grid. */
-function ComponentGrid({
-  label,
-  names,
-  images,
-}: {
-  label: string;
-  names?: string[];
-  images?: Record<string, string>;
-}) {
-  if (!names?.length) return null;
-
-  return (
-    <div className="mt-6 first:mt-0">
-      <h3 className="mb-3 text-xs font-bold uppercase tracking-[0.18em] text-muted-foreground">
-        {label}
-      </h3>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-        {names.map((name) => {
-          const image = images?.[name];
-          return (
-            <div
-              key={name}
-              className="technical-panel overflow-hidden rounded-lg border border-border transition hover:border-primary/50"
-            >
-              <div className="aspect-4/3 overflow-hidden bg-[#0a0a0a]">
-                <img
-                  src={image || getFallbackImageUrl(name)}
-                  alt={name}
-                  loading="lazy"
-                  onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = getFallbackImageUrl(name);
-                  }}
-                  className="h-full w-full object-cover transition duration-500 hover:scale-105"
-                />
-              </div>
-              <p className="px-3 py-2.5 text-xs font-medium leading-snug text-foreground">{name}</p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
 
 export default function AircraftDetail({
   aircraft,
